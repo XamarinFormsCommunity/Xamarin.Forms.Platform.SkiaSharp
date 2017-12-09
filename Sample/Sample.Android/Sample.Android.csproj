@@ -74,5 +74,19 @@
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Xamarin.Forms.Platform.SkiaSharp.Droid\Xamarin.Forms.Platform.SkiaSharp.Droid.csproj">
+      <Project>{e2891460-1b4f-499b-aa09-c5f106583c95}</Project>
+      <Name>Xamarin.Forms.Platform.SkiaSharp.Droid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Xamarin.Forms.Platform.SkiaSharp\Xamarin.Forms.Platform.SkiaSharp.csproj">
+      <Project>{8bdf8611-cba1-43e2-a8c7-6aab48d62a04}</Project>
+      <Name>Xamarin.Forms.Platform.SkiaSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sample\Sample.csproj">
+      <Project>{a1aab97f-4197-4fe9-b17e-18cf0fe47be1}</Project>
+      <Name>Sample</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
