@@ -23,10 +23,10 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
             IsInitialized = true;
 
-            Device.PlatformServices = new SkiaPlatformServices();
-            Device.Info = new SkiaDeviceInfo();
+            Device.PlatformServices = new SKPlatformServices();
+            Device.Info = new SKDeviceInfo();
 
-            ExpressionSearch.Default = new SkiaExpressionSearch();
+            ExpressionSearch.Default = new SKExpressionSearch();
 
             Registrar.RegisterAll(new[]
             {

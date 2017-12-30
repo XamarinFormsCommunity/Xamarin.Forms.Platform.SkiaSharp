@@ -1,6 +1,6 @@
 ﻿namespace Xamarin.Forms.Platform.SkiaSharp
 {
-    public class PlatformRenderer : Controls.View
+    public class PlatformRenderer : Controls.SKView
     {
         private Platform _platform;
 

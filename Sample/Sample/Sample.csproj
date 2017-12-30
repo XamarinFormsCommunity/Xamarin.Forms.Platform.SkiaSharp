@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="2.5.0.91635" />
+    <ProjectReference Include="..\..\Xamarin.Forms\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj" />
+    <ProjectReference Include="..\..\Xamarin.Forms\Xamarin.Forms.Platform\Xamarin.Forms.Platform.csproj" />
+    <ProjectReference Include="..\..\Xamarin.Forms\Xamarin.Forms.Xaml\Xamarin.Forms.Xaml.csproj" />
   </ItemGroup>
 
 </Project>

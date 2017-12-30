@@ -8,7 +8,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
         private bool _disposed;
         private readonly PlatformRenderer _renderer;
 
-        internal Platform()
+        public Platform()
         {
             _renderer = new PlatformRenderer(this);
         }
@@ -18,14 +18,13 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             typeof(Platform), default(IVisualElementRenderer),
         propertyChanged: (bindable, oldvalue, newvalue) =>
         {
-            var view = bindable as VisualElement;
-            if (view != null)
+            if (bindable is VisualElement view)
                 view.IsPlatformEnabled = newvalue != null;
         });
 
         Page Page { get; set; }
 
-        internal PlatformRenderer PlatformRenderer => _renderer;
+        public PlatformRenderer PlatformRenderer => _renderer;
 
         public void Dispose()
         {
@@ -39,7 +38,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
         {
             var renderView = GetRenderer(view);
 
-            if (renderView == null || renderView.Container == null)
+            if (renderView == null || renderView.NativeView == null)
                 return new SizeRequest(Size.Zero);
 
             return renderView.GetDesiredSize(widthConstraint, heightConstraint);
@@ -72,7 +71,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             }
         }
 
-        internal void SetPage(Page newRoot)
+        public void SetPage(Page newRoot)
         {
             if (newRoot == null)
                 return;
@@ -95,12 +94,12 @@ namespace Xamarin.Forms.Platform.SkiaSharp
                 viewRenderer = CreateRenderer(mainPage);
                 SetRenderer(mainPage, viewRenderer);
 
-                PlatformRenderer.Controls.Add(viewRenderer.Container);
+                PlatformRenderer.AddView(viewRenderer.NativeView);
             }
         }
     }
 
-    internal class DefaultRenderer : VisualElementRenderer<VisualElement, Controls.Control>
+    internal class DefaultRenderer : VisualElementRenderer<VisualElement, Controls.SKView>
     {
 
     }

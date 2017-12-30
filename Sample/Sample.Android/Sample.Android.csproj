@@ -47,9 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="2.5.0.91635" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,13 +65,6 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\Tabbar.axml" />
-    <AndroidResource Include="Resources\layout\Toolbar.axml" />
-    <AndroidResource Include="Resources\values\styles.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\Xamarin.Forms.Platform.SkiaSharp.Droid\Xamarin.Forms.Platform.SkiaSharp.Droid.csproj">
       <Project>{e2891460-1b4f-499b-aa09-c5f106583c95}</Project>
       <Name>Xamarin.Forms.Platform.SkiaSharp.Droid</Name>
@@ -83,10 +73,21 @@
       <Project>{8bdf8611-cba1-43e2-a8c7-6aab48d62a04}</Project>
       <Name>Xamarin.Forms.Platform.SkiaSharp</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Xamarin.Forms\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj">
+      <Project>{1FDED3C4-F003-43E4-9A53-5CC417166857}</Project>
+      <Name>Xamarin.Forms.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Xamarin.Forms\Xamarin.Forms.Platform\Xamarin.Forms.Platform.csproj">
+      <Project>{755e554c-a32f-457f-8d65-1a39e1816ad6}</Project>
+      <Name>Xamarin.Forms.Platform</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sample\Sample.csproj">
       <Project>{a1aab97f-4197-4fe9-b17e-18cf0fe47be1}</Project>
       <Name>Sample</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\values\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
