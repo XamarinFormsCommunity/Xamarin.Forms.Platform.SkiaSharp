@@ -1,4 +1,5 @@
 ﻿using System;
+using Container = Xamarin.Forms.Platform.SkiaSharp.Controls.SKView;
 
 namespace Xamarin.Forms.Platform.SkiaSharp
 {
@@ -8,7 +9,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
         VisualElement Element { get; }
 
-        Controls.Control Container { get; }
+        Container NativeView { get; }
 
         bool Disposed { get; }
 

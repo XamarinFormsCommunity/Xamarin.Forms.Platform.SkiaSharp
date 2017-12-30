@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Xamarin.Forms.Platform.SkiaSharp.Controls;
 using Xamarin.Forms.Platform.SkiaSharp.Extensions;
-using Container = Xamarin.Forms.Platform.SkiaSharp.Controls.View;
-using Control = Xamarin.Forms.Platform.SkiaSharp.Controls.Control;
+using Container = Xamarin.Forms.Platform.SkiaSharp.Controls.SKView;
+using Control = Xamarin.Forms.Platform.SkiaSharp.Controls.SKView;
 
 namespace Xamarin.Forms.Platform.SkiaSharp
 {
@@ -13,6 +12,8 @@ namespace Xamarin.Forms.Platform.SkiaSharp
       where TNativeElement : Control
     {
         private bool _disposed;
+        private VisualElementPackager _packager;
+
         private readonly PropertyChangedEventHandler _propertyChangedHandler;
         private readonly List<EventHandler<VisualElementChangedEventArgs>> _elementChangedHandlers = new List<EventHandler<VisualElementChangedEventArgs>>();
 
@@ -31,7 +32,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
         public TElement Element { get; set; }
 
-        public Container Container => this;
+        public Container NativeView => this;
 
         public bool Disposed { get { return _disposed; } }
 
@@ -44,8 +45,6 @@ namespace Xamarin.Forms.Platform.SkiaSharp
         }
 
         protected IElementController ElementController => Element as IElementController;
-
-        Control IVisualElementRenderer.Container => throw new NotImplementedException();
 
         public event EventHandler<ElementChangedEventArgs<TElement>> ElementChanged;
 
@@ -76,6 +75,12 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
             if (element != null)
             {
+                if (_packager == null)
+                {
+                    _packager = new VisualElementPackager(this);
+                    _packager.Load();
+                }
+
                 element.PropertyChanged += _propertyChangedHandler;
             }
 

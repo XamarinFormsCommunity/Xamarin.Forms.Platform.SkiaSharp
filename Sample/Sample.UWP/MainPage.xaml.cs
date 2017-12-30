@@ -5,8 +5,6 @@
         public MainPage()
         {
             this.InitializeComponent();
-
-            LoadApplication(new Sample.App());
         }
     }
 }

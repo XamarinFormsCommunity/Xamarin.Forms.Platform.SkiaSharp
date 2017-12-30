@@ -2,7 +2,7 @@
 
 namespace Xamarin.Forms.Platform.SkiaSharp.Controls
 {
-    public class BoxView : Control
+    public class BoxView : SKView
     {
         private SKColor _color;
 
@@ -16,12 +16,14 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Controls
             }
         }
 
-        public override void Draw(SKCanvas canvas)
+        protected override void Render(SKCanvas canvas, SKRect frame)
         {
+            base.Render(canvas, frame);
+
             using (var paint = new SKPaint { IsAntialias = true })
             {
                 paint.Color = Color;
-                canvas.DrawRect(Bounds, paint);
+                canvas.DrawRect(frame, paint);
             }
         }
     }
