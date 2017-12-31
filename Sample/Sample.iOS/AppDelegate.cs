@@ -1,5 +1,6 @@
 ﻿using Foundation;
 using UIKit;
+using Xamarin.Forms.Platform.SkiaSharp.iOS;
 
 namespace Sample.iOS
 {
@@ -7,7 +8,7 @@ namespace Sample.iOS
     // User Interface of the application, as well as listening (and optionally responding) to 
     // application events from iOS.
     [Register("AppDelegate")]
-    public partial class AppDelegate : UIApplicationDelegate
+    public partial class AppDelegate : SKApplicationDelegate
     {
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
@@ -18,6 +19,9 @@ namespace Sample.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            Xamarin.Forms.Platform.SkiaSharp.Forms.Init();
+            LoadApplication(new App());
+
             return base.FinishedLaunching(app, options);
         }
     }
