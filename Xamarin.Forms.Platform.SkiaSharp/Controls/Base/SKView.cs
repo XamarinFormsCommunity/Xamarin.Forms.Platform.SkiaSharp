@@ -12,7 +12,6 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Controls
         private bool _isInvalidated;
         private SKColor _backgroundColor;
         private SKRect _frame;
-        private bool _clipBounds = true;
         private SKView _parent;
         private List<SKView> _children = new List<SKView>();
 
@@ -47,39 +46,19 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Controls
             set => SetAndInvalidate(ref _backgroundColor, value);
         }
 
-        public bool ClipBounds
-        {
-            get => _clipBounds;
-            set => SetAndInvalidate(ref _clipBounds, value);
-        }
-
         public List<SKView> Children => _children;
 
         public virtual SKSize Measure(SKSize available) => available;
 
         public void Render(SKCanvas canvas)
         {
-            var absolute = this.AbsoluteFrame;
-
-            var roundedRect = new SKPath();
-            roundedRect.AddRect(absolute);
-
-            if (ClipBounds)
-            {
-                canvas.Save();
-                canvas.ClipPath(roundedRect);
-            }
+            var absolute = AbsoluteFrame;
 
             Render(canvas, absolute);
 
             foreach (var child in _children)
             {
                 child.Render(canvas);
-            }
-
-            if (ClipBounds)
-            {
-                canvas.Restore();
             }
         }
 
@@ -89,13 +68,14 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Controls
         {
             if (BackgroundColor != null)
             {
-                using
-                    (var paint = new SKPaint()
-                    {
-                        Color = BackgroundColor,
-                        Style = SKPaintStyle.Fill
-                    })
+                using (var paint = new SKPaint()
+                {
+                    Color = BackgroundColor,
+                    Style = SKPaintStyle.Fill
+                })
+                {
                     canvas.DrawRect(frame, paint);
+                }
             }
         }
 
@@ -123,7 +103,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Controls
         {
             foreach (var child in children)
             {
-                this.AddView(child);
+                AddView(child);
             }
         }
 
@@ -153,6 +133,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Controls
             {
                 field = value;
                 Invalidate();
+
                 return true;
             }
 
