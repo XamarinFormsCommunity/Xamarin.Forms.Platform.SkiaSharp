@@ -24,7 +24,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>i386, x86_64</MtouchArch>
-    <MtouchLink>None</MtouchLink>
+    <MtouchLink>SdkOnly</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
@@ -121,6 +121,24 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Xamarin.Forms.Platform.SkiaSharp.iOS\Xamarin.Forms.Platform.SkiaSharp.iOS.csproj">
+      <Project>{5DA13E73-FAE4-4228-A109-695835F7EA5C}</Project>
+      <Name>Xamarin.Forms.Platform.SkiaSharp.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Xamarin.Forms.Platform.SkiaSharp\Xamarin.Forms.Platform.SkiaSharp.csproj">
+      <Project>{8bdf8611-cba1-43e2-a8c7-6aab48d62a04}</Project>
+      <Name>Xamarin.Forms.Platform.SkiaSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Xamarin.Forms\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj">
+      <Project>{1fded3c4-f003-43e4-9a53-5cc417166857}</Project>
+      <Name>Xamarin.Forms.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Xamarin.Forms\Xamarin.Forms.Platform\Xamarin.Forms.Platform.csproj">
+      <Project>{755e554c-a32f-457f-8d65-1a39e1816ad6}</Project>
+      <Name>Xamarin.Forms.Platform</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sample\Sample.csproj">
       <Project>{a1aab97f-4197-4fe9-b17e-18cf0fe47be1}</Project>
       <Name>Sample</Name>
