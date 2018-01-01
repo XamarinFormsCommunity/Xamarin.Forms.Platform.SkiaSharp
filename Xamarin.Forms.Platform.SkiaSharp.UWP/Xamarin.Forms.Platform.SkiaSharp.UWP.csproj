@@ -7,8 +7,8 @@
     <ProjectGuid>{D3AC6C2C-BBB7-4111-8DA3-E07835A1F23F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Xamarin.Forms.Platform.UWP</RootNamespace>
-    <AssemblyName>Xamarin.Forms.Platform.UWP</AssemblyName>
+    <RootNamespace>Xamarin.Forms.Platform.SkiaSharp.UWP</RootNamespace>
+    <AssemblyName>Xamarin.Forms.Platform.SkiaSharp.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
