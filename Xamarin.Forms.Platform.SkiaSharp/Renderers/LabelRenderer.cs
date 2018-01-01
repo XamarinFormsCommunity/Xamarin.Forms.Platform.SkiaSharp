@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Xamarin.Forms.Platform.SkiaSharp.Extensions;
 
 namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
 {
@@ -14,6 +15,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
                 }
 
                 UpdateText();
+                UpdateTextColor();
             }
 
             base.OnElementChanged(e);
@@ -31,11 +33,18 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
                 UpdateText();
             else if (e.PropertyName == Label.FormattedTextProperty.PropertyName)
                 UpdateText();
+            else if (e.PropertyName == Label.TextColorProperty.PropertyName)
+                UpdateTextColor();
         }
 
         private void UpdateText()
         {
             Control.Text = Element.Text;
+        }
+
+        private void UpdateTextColor()
+        {
+            Control.TextColor = Element.TextColor.ToSkiaColor();
         }
     }
 }

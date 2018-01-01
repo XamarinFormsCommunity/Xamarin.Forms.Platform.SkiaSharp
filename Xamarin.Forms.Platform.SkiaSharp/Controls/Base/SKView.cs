@@ -24,8 +24,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Controls
             Parent.Frame.Top + Frame.Top,
             Frame.Size.Width,
             Frame.Size.Height);
-
-
+        
         public SKRect Frame
         {
             get => _frame;

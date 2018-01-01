@@ -15,11 +15,11 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
         public bool IsInvokeRequired => throw new NotImplementedException();
 
-        public string RuntimePlatform => throw new NotImplementedException();
+        public string RuntimePlatform => Device.Skia;
 
         public void BeginInvokeOnMainThread(Action action)
         {
-            throw new NotImplementedException();
+            action.Invoke();
         }
 
         public Ticker CreateTicker()

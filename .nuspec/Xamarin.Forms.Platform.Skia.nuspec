@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Xamarin.Forms.Platform.Skia$IdAppend$</id>
+    <version>$version$</version>
+    <authors>Xamarin Community</authors>
+    <owners>Xamarin Community</owners>
+    <tags>xamarin forms xamarinforms xamarin.forms android ios uwp skiasharp</tags>
+    <licenseUrl>http://aka.ms/xamarin-forms-license</licenseUrl>
+    <iconUrl>http://xamarin.com/content/images/nuget/xamarin.png</iconUrl>
+    <projectUrl>http://xamarin.com/forms</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Xamarin Forms Renderer to build UIs using SkiaSharp</description>
+    <copyright>Copyright 2013-2018</copyright>
+    <dependencies> 
+      <group>
+        <dependency id="Xamarin.Forms$IdAppend$" version="$version$"/>
+      </group>
+      <group targetFramework="MonoAndroid10">
+        <dependency id="SkiaSharp.Views" version="1.59.3"/>
+      </group>
+      <group targetFramework="Xamarin.iOS10">
+        <dependency id="SkiaSharp.Views" version="1.59.3"/>"
+      </group>
+      <group targetFramework="uap10.0">
+        <dependency id="SkiaSharp.Views" version="1.59.3"/>
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    
+	  <!--netstandard-->
+    <file src="..\Xamarin.Forms.Platform.SkiaSharp\bin\$Configuration$\Xamarin.Forms.Platform.SkiaSharp.dll" target="lib\netstandard2.0" />
+    <file src="..\Xamarin.Forms.Platform.SkiaSharp\bin\$Configuration$\Xamarin.Forms.Platform.SkiaSharp.dll" target="lib\netstandard2.0" />
+	
+    <!--Android-->
+    <file src="..\Xamarin.Forms.Platform.SkiaSharp\bin\$Configuration$\Xamarin.Forms.Platform.SkiaSharp.dll" target="lib\MonoAndroid10" />
+    <file src="..\Xamarin.Forms.Platform.SkiaSharp\bin\$Configuration$\Xamarin.Forms.Platform.SkiaSharp.*pdb" target="lib\MonoAndroid10" />
+    <file src="..\Xamarin.Forms.Platform.SkiaSharp.Droid\bin\$Configuration$\Xamarin.Forms.Platform.SkiaSharp.Droid.dll" target="lib\MonoAndroid10" />
+    <file src="..\Xamarin.Forms.Platform.SkiaSharp.Droid\bin\$Configuration$\Xamarin.Forms.Platform.SkiaSharp.Droid.*pdb" target="lib\MonoAndroid10" />
+   
+    <!--iPhone Unified-->
+    <file src="..\Xamarin.Forms.Platform.SkiaSharp\bin\$Configuration$\Xamarin.Forms.Platform.SkiaSharp.dll" target="lib\Xamarin.iOS10" />
+    <file src="..\Xamarin.Forms.Platform.SkiaSharp\bin\$Configuration$\Xamarin.Forms.Platform.SkiaSharp.*pdb" target="lib\Xamarin.iOS10" />
+    <file src="..\Xamarin.Forms.Platform.SkiaSharp.iOS\bin\$Configuration$\Xamarin.Forms.Platform.SkiaSharp.iOS.dll" target="lib\Xamarin.iOS10" />
+    <file src="..\Xamarin.Forms.Platform.SkiaSharp.iOS\bin\$Configuration$\Xamarin.Forms.Platform.SkiaSharp.iOS.*pdb" target="lib\Xamarin.iOS10" />
+
+    <!--UWP-->
+    <file src="..\Xamarin.Forms.Platform.SkiaSharp\bin\$Configuration$\Xamarin.Forms.Platform.SkiaSharp.dll" target="lib\uap10.0" />
+    <file src="..\Xamarin.Forms.Platform.SkiaSharp\bin\$Configuration$\Xamarin.Forms.Platform.SkiaSharp.*pdb" target="lib\uap10.0" />
+    <file src="..\Xamarin.Forms.Platform.SkiaSharp.UWP\bin\$Configuration$\Xamarin.Forms.Platform.SkiaSharp.UWP.dll" target="lib\uap10.0" />
+    <file src="..\Xamarin.Forms.Platform.SkiaSharp.UWP\bin\$Configuration$\Xamarin.Forms.Platform.SkiaSharp.UWP.*pdb" target="lib\uap10.0" />
+
+  </files>
+</package>
