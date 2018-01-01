@@ -6,13 +6,17 @@ namespace Sample.Views
     {
         public MainView()
         {
+            var panel = new StackLayout();
+
             var label = new Label
             {
                 Text = "First Sample!",
-                FontSize = 24
+                TextColor = Color.Red
             };
 
-            Content = label;
+            panel.Children.Add(label);
+
+            Content = panel;
         }
     }
 }

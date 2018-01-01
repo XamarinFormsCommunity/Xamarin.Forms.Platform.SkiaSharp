@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Xamarin.Forms.Platform.SkiaSharp.Extensions;
@@ -55,7 +56,14 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
         public SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
         {
-            return new SizeRequest();
+            if (Control == null)
+                return new SizeRequest();
+
+            var constraint = new SKSize((float)widthConstraint, (float)heightConstraint);
+
+            Control.Measure(constraint);
+
+            return new SizeRequest(new Size(Math.Ceiling(Control.Frame.Width), Math.Ceiling(Control.Frame.Height)));
         }
 
         void IVisualElementRenderer.SetElement(VisualElement element)
@@ -117,7 +125,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             UpdateBackgroundColor();
             UpdateIsVisible();
         }
-
+            
         private void UpdateIsVisible()
         {
             if (_disposed || Element == null || Control == null)
@@ -137,7 +145,9 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
             if (!isDefault)
             {
-               var color = backgroundColor.ToSkiaColor();
+                var color = backgroundColor.ToSkiaColor();
+
+                Control.BackgroundColor = color;
             }
         }
     }

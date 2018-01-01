@@ -15,6 +15,6 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             base.SetNativeControl(view);
 
             AddView(view);
-        }
+        }    
     }
 }

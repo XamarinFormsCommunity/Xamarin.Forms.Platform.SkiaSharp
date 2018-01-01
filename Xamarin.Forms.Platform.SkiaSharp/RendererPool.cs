@@ -121,7 +121,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             renderers.Push(renderer);
         }
 
-        void UpdateRenderers(Xamarin.Forms.Element newElement)
+        void UpdateRenderers(Element newElement)
         {
             var newElementController = (IElementController)newElement;
 
