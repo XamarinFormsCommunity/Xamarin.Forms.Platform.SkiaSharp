@@ -14,6 +14,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
     {
         private bool _disposed;
         private VisualElementPackager _packager;
+        private VisualElementTracker _tracker;
 
         private readonly PropertyChangedEventHandler _propertyChangedHandler;
         private readonly List<EventHandler<VisualElementChangedEventArgs>> _elementChangedHandlers = new List<EventHandler<VisualElementChangedEventArgs>>();
@@ -83,6 +84,11 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
             if (element != null)
             {
+                if (_tracker == null)
+                {
+                    _tracker = new VisualElementTracker(this);
+                }
+
                 if (_packager == null)
                 {
                     _packager = new VisualElementPackager(this);
