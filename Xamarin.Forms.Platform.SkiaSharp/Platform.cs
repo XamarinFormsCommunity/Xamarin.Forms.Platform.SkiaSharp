@@ -95,6 +95,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
                 SetRenderer(mainPage, viewRenderer);
 
                 PlatformRenderer.AddView(viewRenderer.NativeView);
+                viewRenderer.SetElementSize(new Size(640, 480));
             }
         }
     }

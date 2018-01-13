@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Threading;
+using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Platform.SkiaSharp
 {
@@ -13,13 +14,17 @@ namespace Xamarin.Forms.Platform.SkiaSharp
         private Rectangle _lastParentBounds;
         private int _updateCount;
 
+        readonly EventHandler<EventArg<VisualElement>> _batchCommittedHandler;
         readonly PropertyChangedEventHandler _propertyChangedHandler;
         readonly EventHandler _sizeChangedEventHandler;
+
+        public event EventHandler NativeControlUpdated;
 
         public VisualElementTracker(IVisualElementRenderer renderer)
         {
             _propertyChangedHandler = HandlePropertyChanged;
             _sizeChangedEventHandler = HandleSizeChanged;
+            _batchCommittedHandler = HandleRedrawNeeded;
 
             Renderer = renderer ?? throw new ArgumentNullException(nameof(renderer));
             renderer.ElementChanged += OnRendererElementChanged;
@@ -32,7 +37,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
         {
             Dispose(true);
         }
-        
+
         protected virtual void Dispose(bool disposing)
         {
             if (_disposed)
@@ -52,15 +57,16 @@ namespace Xamarin.Forms.Platform.SkiaSharp
         private void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == VisualElement.XProperty.PropertyName || e.PropertyName == VisualElement.YProperty.PropertyName || e.PropertyName == VisualElement.WidthProperty.PropertyName ||
-                e.PropertyName == VisualElement.HeightProperty.PropertyName || e.PropertyName == VisualElement.AnchorXProperty.PropertyName || e.PropertyName == VisualElement.AnchorYProperty.PropertyName ||
-                e.PropertyName == VisualElement.TranslationXProperty.PropertyName || e.PropertyName == VisualElement.TranslationYProperty.PropertyName || e.PropertyName == VisualElement.ScaleProperty.PropertyName ||
-                e.PropertyName == VisualElement.RotationProperty.PropertyName || e.PropertyName == VisualElement.RotationXProperty.PropertyName || e.PropertyName == VisualElement.RotationYProperty.PropertyName ||
-                e.PropertyName == VisualElement.IsVisibleProperty.PropertyName || e.PropertyName == VisualElement.IsEnabledProperty.PropertyName ||
-                e.PropertyName == VisualElement.InputTransparentProperty.PropertyName || e.PropertyName == VisualElement.OpacityProperty.PropertyName)
+                e.PropertyName == VisualElement.HeightProperty.PropertyName)
                 UpdateNativeControl();
         }
 
         private void HandleSizeChanged(object sender, EventArgs e)
+        {
+            UpdateNativeControl();
+        }
+
+        private void HandleRedrawNeeded(object sender, EventArgs e)
         {
             UpdateNativeControl();
         }
@@ -79,12 +85,14 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             {
                 oldElement.PropertyChanged -= _propertyChangedHandler;
                 oldElement.SizeChanged -= _sizeChangedEventHandler;
+                oldElement.BatchCommitted -= _batchCommittedHandler;
             }
 
             _element = newElement;
 
             if (newElement != null)
             {
+                newElement.BatchCommitted += _batchCommittedHandler;
                 newElement.PropertyChanged += _propertyChangedHandler;
                 newElement.SizeChanged += _sizeChangedEventHandler;
 
@@ -98,6 +106,8 @@ namespace Xamarin.Forms.Platform.SkiaSharp
                 return;
 
             OnUpdateNativeControl();
+
+            NativeControlUpdated?.Invoke(this, EventArgs.Empty);
         }
 
         private void OnUpdateNativeControl()
@@ -113,14 +123,6 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             var parentBoundsChanged = _lastParentBounds != (viewParent == null ? Rectangle.Zero : viewParent.Bounds);
             var thread = !boundsChanged;
 
-            var anchorX = (float)view.AnchorX;
-            var anchorY = (float)view.AnchorY;
-            var translationX = (float)view.TranslationX;
-            var translationY = (float)view.TranslationY;
-            var rotationX = (float)view.RotationX;
-            var rotationY = (float)view.RotationY;
-            var rotation = (float)view.Rotation;
-            var scale = (float)view.Scale;
             var width = (float)view.Width;
             var height = (float)view.Height;
             var x = (float)view.X;
@@ -134,7 +136,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             var parent = view.RealParent;
 
             parentBoundsChanged = true;
-            bool shouldUpdate = width > 0 && height > 0 && parent != null && (boundsChanged || parentBoundsChanged);
+            bool shouldUpdate = (width > 0 || height > 0) && parent != null && (boundsChanged || parentBoundsChanged);
 
             if (shouldUpdate)
             {

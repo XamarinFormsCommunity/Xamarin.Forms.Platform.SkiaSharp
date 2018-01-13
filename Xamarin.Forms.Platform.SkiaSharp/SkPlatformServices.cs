@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.IO.IsolatedStorage;
+using System.Net;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
@@ -64,12 +66,41 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
         public Task<Stream> GetStreamAsync(Uri uri, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var tcs = new TaskCompletionSource<Stream>();
+
+            try
+            {
+                HttpWebRequest request = WebRequest.CreateHttp(uri);
+                request.BeginGetResponse(ar =>
+                {
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        tcs.SetCanceled();
+                        return;
+                    }
+
+                    try
+                    {
+                        Stream stream = request.EndGetResponse(ar).GetResponseStream();
+                        tcs.TrySetResult(stream);
+                    }
+                    catch (Exception ex)
+                    {
+                        tcs.TrySetException(ex);
+                    }
+                }, null);
+            }
+            catch (Exception ex)
+            {
+                tcs.TrySetException(ex);
+            }
+
+            return tcs.Task;
         }
 
         public IIsolatedStorageFile GetUserStoreForApplication()
         {
-            throw new NotImplementedException();
+            return new SKIsolatedStorageFile(IsolatedStorageFile.GetUserStoreForApplication());
         }
 
         public void OpenUriAction(Uri uri)
@@ -92,6 +123,49 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             if (v < 10)
                 return '0' + v;
             return 'a' + v - 10;
+        }
+    }
+
+    public class SKIsolatedStorageFile : IIsolatedStorageFile
+    {
+        readonly IsolatedStorageFile _isolatedStorageFile;
+
+        public SKIsolatedStorageFile(IsolatedStorageFile isolatedStorageFile)
+        {
+            _isolatedStorageFile = isolatedStorageFile;
+        }
+
+        public Task CreateDirectoryAsync(string path)
+        {
+            _isolatedStorageFile.CreateDirectory(path);
+            return Task.FromResult(true);
+        }
+
+        public Task<bool> GetDirectoryExistsAsync(string path)
+        {
+            return Task.FromResult(_isolatedStorageFile.DirectoryExists(path));
+        }
+
+        public Task<bool> GetFileExistsAsync(string path)
+        {
+            return Task.FromResult(_isolatedStorageFile.FileExists(path));
+        }
+
+        public Task<DateTimeOffset> GetLastWriteTimeAsync(string path)
+        {
+            return Task.FromResult(_isolatedStorageFile.GetLastWriteTime(path));
+        }
+
+        public Task<Stream> OpenFileAsync(string path, FileMode mode, FileAccess access)
+        {
+            Stream stream = _isolatedStorageFile.OpenFile(path, mode, access);
+            return Task.FromResult(stream);
+        }
+
+        public Task<Stream> OpenFileAsync(string path, FileMode mode, FileAccess access, FileShare share)
+        {
+            Stream stream = _isolatedStorageFile.OpenFile(path, mode, access, share);
+            return Task.FromResult(stream);
         }
     }
 }

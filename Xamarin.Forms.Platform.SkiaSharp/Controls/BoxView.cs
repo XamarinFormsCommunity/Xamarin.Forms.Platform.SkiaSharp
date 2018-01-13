@@ -5,6 +5,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Controls
     public class BoxView : SKView
     {
         private SKColor _color;
+        private SKPoint _cornerRadius;
 
         public SKColor Color
         {
@@ -16,6 +17,16 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Controls
             }
         }
 
+        public SKPoint CornerRadius
+        {
+            get => _cornerRadius;
+            set
+            {
+                _cornerRadius = value;
+                Invalidate();
+            }
+        }
+
         protected override void Render(SKCanvas canvas, SKRect frame)
         {
             base.Render(canvas, frame);
@@ -23,7 +34,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Controls
             using (var paint = new SKPaint { IsAntialias = true })
             {
                 paint.Color = Color;
-                canvas.DrawRect(frame, paint);
+                canvas.DrawRoundRect(AbsoluteFrame, CornerRadius.X, CornerRadius.Y, paint);
             }
         }
     }
