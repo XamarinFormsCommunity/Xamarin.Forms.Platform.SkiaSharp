@@ -19,11 +19,12 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Controls
 
         public SKView Parent => _parent;
 
-        public SKRect AbsoluteFrame => Parent == null ? Frame : SKRect.Create(
+        public SKRect AbsoluteFrame => Parent == null ? 
+            Frame : SKRect.Create(
             Parent.Frame.Left + Frame.Left,
             Parent.Frame.Top + Frame.Top,
-            Frame.Size.Width,
-            Frame.Size.Height);
+            Parent.Frame.Size.Width,
+            Parent.Frame.Size.Height);
         
         public SKRect Frame
         {
@@ -42,7 +43,11 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Controls
         public SKColor BackgroundColor
         {
             get => _backgroundColor;
-            set => SetAndInvalidate(ref _backgroundColor, value);
+            set
+            {
+                _backgroundColor = value;
+                Invalidate();
+            }
         }
 
         public List<SKView> Children => _children;
@@ -83,6 +88,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Controls
             if (!_isInvalidated)
             {
                 _isInvalidated = true;
+
                 await Task.Delay(InvalidateTrottle);
 
                 Invalidated?.Invoke(this, EventArgs.Empty);
@@ -124,19 +130,6 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Controls
             child._parent = null;
             _children.Remove(child);
             Invalidate();
-        }
-
-        protected bool SetAndInvalidate<T>(ref T field, T value)
-        {
-            if (!EqualityComparer<T>.Default.Equals(field, value))
-            {
-                field = value;
-                Invalidate();
-
-                return true;
-            }
-
-            return false;
         }
     }
 }

@@ -3,8 +3,13 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.SkiaSharp;
 using Xamarin.Forms.Platform.SkiaSharp.Renderers;
 
+[assembly: ExportImageSourceHandler(typeof(UriImageSource), typeof(UriImageSourceHandler))]
+[assembly: ExportImageSourceHandler(typeof(StreamImageSource), typeof(StreamImageSourceHandler))]
+
 [assembly: ExportRenderer(typeof(BoxView), typeof(BoxViewRenderer))]
+[assembly: ExportRenderer(typeof(Image), typeof(ImageRenderer))]
 [assembly: ExportRenderer(typeof(Label), typeof(LabelRenderer))]
+[assembly: ExportRenderer(typeof(Layout), typeof(LayoutRenderer))]
 [assembly: ExportRenderer(typeof(Page), typeof(PageRenderer))]
 
 namespace Xamarin.Forms.Platform.SkiaSharp
@@ -13,6 +18,14 @@ namespace Xamarin.Forms.Platform.SkiaSharp
     public sealed class ExportRendererAttribute : HandlerAttribute
     {
         public ExportRendererAttribute(Type handler, Type target) : base(handler, target)
+        {
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
+    public sealed class ExportImageSourceHandlerAttribute : HandlerAttribute
+    {
+        public ExportImageSourceHandlerAttribute(Type handler, Type target) : base(handler, target)
         {
         }
     }

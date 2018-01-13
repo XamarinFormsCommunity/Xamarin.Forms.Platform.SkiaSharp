@@ -30,7 +30,8 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
             Registrar.RegisterAll(new[]
             {
-                typeof(ExportRendererAttribute)
+                typeof(ExportRendererAttribute),
+                typeof(ExportImageSourceHandlerAttribute)
             });
         }
     }

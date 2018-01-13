@@ -87,6 +87,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
                 if (_tracker == null)
                 {
                     _tracker = new VisualElementTracker(this);
+                    _tracker.NativeControlUpdated += (sender, e) => UpdateNativeControl();
                 }
 
                 if (_packager == null)
@@ -131,7 +132,11 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             UpdateBackgroundColor();
             UpdateIsVisible();
         }
-            
+        protected virtual void UpdateNativeControl()
+        {
+
+        }
+
         private void UpdateIsVisible()
         {
             if (_disposed || Element == null || Control == null)
