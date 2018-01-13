@@ -29,21 +29,6 @@ namespace Sample.Views
 
             panel.Children.Add(boxView);
 
-            var image = new Image
-            {
-                Source = new UriImageSource
-                {
-                    Uri = new Uri("http://xamarin.com/content/images/pages/branding/assets/xamagon.png"),
-                    CachingEnabled = false
-                },               
-                Aspect = Aspect.AspectFit,
-                HeightRequest = 250,
-                WidthRequest = 250,
-                Margin = new Thickness(12, 24)
-            }; 
-
-            panel.Children.Add(image);
-
             Content = panel;
         }
     }
