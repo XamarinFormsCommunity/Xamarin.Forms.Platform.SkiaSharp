@@ -1,4 +1,4 @@
-﻿using NativeView = Xamarin.Forms.Platform.SkiaSharp.Controls.SKView;
+﻿using NativeView = Xamarin.Forms.Platform.SkiaSharp.Native.SKView;
 
 namespace Xamarin.Forms.Platform.SkiaSharp
 {

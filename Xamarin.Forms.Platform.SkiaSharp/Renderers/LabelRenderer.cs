@@ -3,7 +3,7 @@ using Xamarin.Forms.Platform.SkiaSharp.Extensions;
 
 namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
 {
-    public class LabelRenderer : ViewRenderer<Label, Controls.Label>
+    public class LabelRenderer : ViewRenderer<Label, Native.Label>
     {
         protected override void OnElementChanged(ElementChangedEventArgs<Label> e)
         {
@@ -11,7 +11,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
             {
                 if (Control == null)
                 {
-                    SetNativeControl(new Controls.Label());
+                    SetNativeControl(new Native.Label());
                 }
 
                 UpdateText();

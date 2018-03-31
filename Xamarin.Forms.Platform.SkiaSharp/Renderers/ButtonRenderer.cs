@@ -3,7 +3,7 @@ using Xamarin.Forms.Platform.SkiaSharp.Extensions;
 
 namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
 {
-    public class ButtonRenderer : ViewRenderer<Button, Controls.Button>
+    public class ButtonRenderer : ViewRenderer<Button, Native.Button>
     {
         protected override void OnElementChanged(ElementChangedEventArgs<Button> e)
         {
@@ -11,7 +11,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
             {
                 if (Control == null)
                 {
-                    SetNativeControl(new Controls.Button());
+                    SetNativeControl(new Native.Button());
                 }
 
                 UpdateText();

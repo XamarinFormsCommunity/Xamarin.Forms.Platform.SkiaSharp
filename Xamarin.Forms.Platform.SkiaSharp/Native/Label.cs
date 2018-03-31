@@ -1,6 +1,6 @@
 ﻿using SkiaSharp;
 
-namespace Xamarin.Forms.Platform.SkiaSharp.Controls
+namespace Xamarin.Forms.Platform.SkiaSharp.Native
 {
     public class Label : SKView
     {

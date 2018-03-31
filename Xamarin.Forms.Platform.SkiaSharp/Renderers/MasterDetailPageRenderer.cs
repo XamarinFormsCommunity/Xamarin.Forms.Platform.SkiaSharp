@@ -2,7 +2,7 @@
 
 namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
 {
-    public class MasterDetailPageRenderer : VisualElementRenderer<MasterDetailPage, Controls.MasterDetailPage>
+    public class MasterDetailPageRenderer : VisualElementRenderer<MasterDetailPage, Native.MasterDetailPage>
     {
         protected override void OnElementChanged(ElementChangedEventArgs<MasterDetailPage> e)
         {
@@ -12,7 +12,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
             {
                 if (Control == null)
                 {
-                    SetNativeControl(new Controls.MasterDetailPage());					
+                    SetNativeControl(new Native.MasterDetailPage());					
                 }
 			}
         }

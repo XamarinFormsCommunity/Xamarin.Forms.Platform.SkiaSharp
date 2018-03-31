@@ -3,7 +3,7 @@ using Xamarin.Forms.Platform.SkiaSharp.Extensions;
 
 namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
 {
-    public class BoxViewRenderer : ViewRenderer<BoxView, Controls.BoxView>
+    public class BoxViewRenderer : ViewRenderer<BoxView, Native.BoxView>
     {
         protected override void OnElementChanged(ElementChangedEventArgs<BoxView> e)
         {
@@ -11,7 +11,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
             {
                 if (Control == null)
                 {
-                    SetNativeControl(new Controls.BoxView());
+                    SetNativeControl(new Native.BoxView());
                 }
 
                 UpdateColor();

@@ -1,5 +1,5 @@
 ﻿using System;
-using Container = Xamarin.Forms.Platform.SkiaSharp.Controls.SKView;
+using Container = Xamarin.Forms.Platform.SkiaSharp.Native.SKView;
 
 namespace Xamarin.Forms.Platform.SkiaSharp
 {

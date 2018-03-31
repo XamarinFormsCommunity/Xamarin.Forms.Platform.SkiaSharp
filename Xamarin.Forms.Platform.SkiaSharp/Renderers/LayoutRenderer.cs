@@ -1,4 +1,4 @@
-﻿using Panel = Xamarin.Forms.Platform.SkiaSharp.Controls.SKView;
+﻿using Panel = Xamarin.Forms.Platform.SkiaSharp.Native.SKView;
 
 namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
 {

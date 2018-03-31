@@ -100,7 +100,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
         }
     }
 
-    internal class DefaultRenderer : VisualElementRenderer<VisualElement, Controls.SKView>
+    internal class DefaultRenderer : VisualElementRenderer<VisualElement, Native.SKView>
     {
 
     }

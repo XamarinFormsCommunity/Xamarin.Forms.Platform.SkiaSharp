@@ -8,7 +8,7 @@ using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
 {
-    public class ImageRenderer : ViewRenderer<Image, Controls.Image>
+    public class ImageRenderer : ViewRenderer<Image, Native.Image>
     {
         protected override void OnElementChanged(ElementChangedEventArgs<Image> e)
         {
@@ -16,7 +16,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
             {
                 if (Control == null)
                 {
-                    SetNativeControl(new Controls.Image());
+                    SetNativeControl(new Native.Image());
                 }
 
                 UpdateSource();

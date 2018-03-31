@@ -2,7 +2,7 @@
 
 namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
 {
-	public class NavigationPageRenderer : VisualElementRenderer<NavigationPage, Controls.NavigationPage>
+	public class NavigationPageRenderer : VisualElementRenderer<NavigationPage, Native.NavigationPage>
 	{
 		protected override void OnElementChanged(ElementChangedEventArgs<NavigationPage> e)
 		{
@@ -12,7 +12,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
 			{
 				if (Control == null)
 				{
-					SetNativeControl(new Controls.NavigationPage());
+					SetNativeControl(new Native.NavigationPage());
 				}
 			}
 		}		

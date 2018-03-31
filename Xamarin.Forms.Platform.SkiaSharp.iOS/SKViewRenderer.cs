@@ -1,7 +1,7 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.iOS;
 using System;
-using Xamarin.Forms.Platform.SkiaSharp.Controls;
+using Xamarin.Forms.Platform.SkiaSharp.Native;
 
 namespace Xamarin.Forms.Platform.SkiaSharp.iOS
 {

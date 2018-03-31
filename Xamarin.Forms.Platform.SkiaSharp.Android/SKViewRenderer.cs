@@ -2,7 +2,7 @@
 using Android.Content;
 using SkiaSharp;
 using SkiaSharp.Views.Android;
-using Xamarin.Forms.Platform.SkiaSharp.Controls;
+using Xamarin.Forms.Platform.SkiaSharp.Native;
 
 namespace Xamarin.Forms.Platform.SkiaSharp.Android
 {

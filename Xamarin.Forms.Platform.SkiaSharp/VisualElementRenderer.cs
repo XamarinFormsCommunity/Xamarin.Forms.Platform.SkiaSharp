@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Xamarin.Forms.Platform.SkiaSharp.Extensions;
-using Container = Xamarin.Forms.Platform.SkiaSharp.Controls.SKView;
-using Control = Xamarin.Forms.Platform.SkiaSharp.Controls.SKView;
+using Container = Xamarin.Forms.Platform.SkiaSharp.Native.SKView;
+using Control = Xamarin.Forms.Platform.SkiaSharp.Native.SKView;
 
 namespace Xamarin.Forms.Platform.SkiaSharp
 {
