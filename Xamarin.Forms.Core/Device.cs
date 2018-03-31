@@ -18,6 +18,7 @@ namespace Xamarin.Forms
         public const string GTK = "GTK";
         public const string Tizen = "Tizen";
 		public const string WPF = "WPF";
+		public const string Skia = "Skia";
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DeviceInfo info;

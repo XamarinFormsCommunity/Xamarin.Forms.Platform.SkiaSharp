@@ -6,7 +6,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Extensions
     {
         public static SKColor ToSkiaColor(this Color color)
         {
-            string hex = color.ToRgbaColor();
+			string hex = color.ToRgbaColor();
             var skiaColor = SKColor.Parse(hex);
 
             return skiaColor;
@@ -14,6 +14,10 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Extensions
 
         internal static string ToRgbaColor(this Color color)
         {
+
+			if (color.IsDefault)
+				return "#000";
+
             int red = (int)(color.R * 255);
             int green = (int)(color.G * 255);
             int blue = (int)(color.B * 255);

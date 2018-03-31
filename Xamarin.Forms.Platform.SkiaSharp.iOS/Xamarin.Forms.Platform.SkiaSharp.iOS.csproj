@@ -57,16 +57,16 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Xamarin.Forms.Platform.SkiaSharp\Xamarin.Forms.Platform.SkiaSharp.csproj">
-      <Project>{8BDF8611-CBA1-43E2-A8C7-6AAB48D62A04}</Project>
-      <Name>Xamarin.Forms.Platform.SkiaSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Xamarin.Forms\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj">
-      <Project>{1fded3c4-f003-43e4-9a53-5cc417166857}</Project>
+    <ProjectReference Include="..\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj">
+      <Project>{57b8b73d-c3b5-4c42-869e-7b2f17d354ac}</Project>
       <Name>Xamarin.Forms.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Xamarin.Forms\Xamarin.Forms.Platform\Xamarin.Forms.Platform.csproj">
-      <Project>{755e554c-a32f-457f-8d65-1a39e1816ad6}</Project>
+    <ProjectReference Include="..\Xamarin.Forms.Platform.SkiaSharp\Xamarin.Forms.Platform.SkiaSharp.csproj">
+      <Project>{cf253c6e-4e76-4985-8433-daff8e665f1c}</Project>
+      <Name>Xamarin.Forms.Platform.SkiaSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xamarin.Forms.Platform\Xamarin.Forms.Platform.csproj">
+      <Project>{d31a6537-ed9c-4ebd-b231-a8d4fe44126a}</Project>
       <Name>Xamarin.Forms.Platform</Name>
     </ProjectReference>
   </ItemGroup>

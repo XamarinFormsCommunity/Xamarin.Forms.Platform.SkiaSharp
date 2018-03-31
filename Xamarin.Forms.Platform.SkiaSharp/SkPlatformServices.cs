@@ -113,10 +113,16 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             throw new NotImplementedException();
         }
 
+		void TimerCallback(object state)
+		{
+			var callback = state as Func<bool>;
+			callback?.Invoke();
+		}
+
         public void StartTimer(TimeSpan interval, Func<bool> callback)
         {
-            throw new NotImplementedException();
-        }
+			new Timer(TimerCallback, callback, Convert.ToInt32(interval.TotalMilliseconds), Timeout.Infinite);
+		}
 
         private static int Hex(int v)
         {
