@@ -54,7 +54,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Controls
 
         public virtual SKSize Measure(SKSize available) => available;
 
-        public void Render(SKCanvas canvas)
+        public virtual void Render(SKCanvas canvas)
         {
             var absolute = AbsoluteFrame;
 

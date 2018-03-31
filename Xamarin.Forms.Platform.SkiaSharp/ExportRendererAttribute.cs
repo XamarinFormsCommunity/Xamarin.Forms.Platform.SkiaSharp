@@ -8,9 +8,12 @@ using Xamarin.Forms.Platform.SkiaSharp.Renderers;
 
 [assembly: ExportRenderer(typeof(BoxView), typeof(BoxViewRenderer))]
 [assembly: ExportRenderer(typeof(Image), typeof(ImageRenderer))]
+[assembly: ExportRenderer(typeof(Button), typeof(ButtonRenderer))]
 [assembly: ExportRenderer(typeof(Label), typeof(LabelRenderer))]
 [assembly: ExportRenderer(typeof(Layout), typeof(LayoutRenderer))]
 [assembly: ExportRenderer(typeof(Page), typeof(PageRenderer))]
+[assembly: ExportRenderer(typeof(NavigationPage), typeof(NavigationPageRenderer))]
+[assembly: ExportRenderer(typeof(MasterDetailPage), typeof(MasterDetailPageRenderer))]
 
 namespace Xamarin.Forms.Platform.SkiaSharp
 {

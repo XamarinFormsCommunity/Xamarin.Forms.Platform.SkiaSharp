@@ -34,9 +34,9 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
         public TElement Element { get; set; }
 
-        public Container NativeView => this;
+		public Container NativeView => this;
 
-        public bool Disposed { get { return _disposed; } }
+		public bool Disposed { get { return _disposed; } }
 
         VisualElement IVisualElementRenderer.Element
         {

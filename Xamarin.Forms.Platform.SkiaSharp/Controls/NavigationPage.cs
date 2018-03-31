@@ -1,6 +1,6 @@
 ﻿namespace Xamarin.Forms.Platform.SkiaSharp.Controls
 {
-	public class Page : SKView
-    {
+	public class NavigationPage : SKView
+	{
 	}
 }
