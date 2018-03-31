@@ -8,7 +8,7 @@ using Control = Xamarin.Forms.Platform.SkiaSharp.Native.SKView;
 
 namespace Xamarin.Forms.Platform.SkiaSharp
 {
-    public class VisualElementRenderer<TElement, TNativeElement> : Container, IVisualElementRenderer, IDisposable
+	public class VisualElementRenderer<TElement, TNativeElement> : Container, IVisualElementRenderer, IDisposable
       where TElement : VisualElement
       where TNativeElement : Control
     {
@@ -102,7 +102,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             OnElementChanged(new ElementChangedEventArgs<TElement>(oldElement, element));
         }
 
-        public void SetElementSize(Size size)
+		public void SetElementSize(Size size)
         {
             Xamarin.Forms.Layout.LayoutChildIntoBoundingRegion(Element,
                 new Rectangle(Element.X, Element.Y, size.Width, size.Height));

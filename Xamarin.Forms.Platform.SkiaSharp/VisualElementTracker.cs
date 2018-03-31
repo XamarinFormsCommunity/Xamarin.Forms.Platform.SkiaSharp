@@ -54,24 +54,24 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             }
         }
 
-        private void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
+        void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == VisualElement.XProperty.PropertyName || e.PropertyName == VisualElement.YProperty.PropertyName || e.PropertyName == VisualElement.WidthProperty.PropertyName ||
                 e.PropertyName == VisualElement.HeightProperty.PropertyName)
                 UpdateNativeControl();
         }
 
-        private void HandleSizeChanged(object sender, EventArgs e)
+        void HandleSizeChanged(object sender, EventArgs e)
         {
             UpdateNativeControl();
         }
 
-        private void HandleRedrawNeeded(object sender, EventArgs e)
+        void HandleRedrawNeeded(object sender, EventArgs e)
         {
             UpdateNativeControl();
         }
 
-        private void OnRendererElementChanged(object s, VisualElementChangedEventArgs e)
+        void OnRendererElementChanged(object s, VisualElementChangedEventArgs e)
         {
             if (_element == e.NewElement)
                 return;
@@ -79,7 +79,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             SetElement(_element, e.NewElement);
         }
 
-        private void SetElement(VisualElement oldElement, VisualElement newElement)
+        void SetElement(VisualElement oldElement, VisualElement newElement)
         {
             if (oldElement != null)
             {
@@ -100,7 +100,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             }
         }
 
-        private void UpdateNativeControl()
+        void UpdateNativeControl()
         {
             if (_disposed)
                 return;
@@ -110,7 +110,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             NativeControlUpdated?.Invoke(this, EventArgs.Empty);
         }
 
-        private void OnUpdateNativeControl()
+        void OnUpdateNativeControl()
         {
             var view = Renderer.Element;
             var nativeView = Renderer.NativeView;
