@@ -9,12 +9,13 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Native
     {
         public const int InvalidateThrottle = 10;
 
-        private bool _isInvalidated;
-        private SKColor _backgroundColor;
-        private SKRect _frame;
-        private SKView _parent;
-        private List<SKView> _children = new List<SKView>();
+        bool _isInvalidated;
+        SKColor _backgroundColor;
+        SKRect _frame;
+        SKView _parent;
+        List<SKView> _children = new List<SKView>();
 
+		public event EventHandler Tap;
         public event EventHandler Invalidated;
 
         public SKView Parent => _parent;
@@ -49,6 +50,15 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Native
                 Invalidate();
             }
         }
+
+		public void HandleTouch(TouchData touch)
+		{
+			if (!(this is Native.Label) && this.Frame.Contains((float)touch.Point.X, (float)touch.Point.Y))
+				foreach (var child in Children)
+					child.HandleTouch(touch);
+			else
+				Tap?.Invoke(this, new EventArgs());
+		}
 
         public List<SKView> Children => _children;
 

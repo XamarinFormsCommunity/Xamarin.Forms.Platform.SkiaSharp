@@ -1,23 +1,33 @@
-﻿using System;
-using Android.Content;
+﻿using Android.Content;
 using SkiaSharp;
 using SkiaSharp.Views.Android;
+using System;
 using Xamarin.Forms.Platform.SkiaSharp.Native;
 
 namespace Xamarin.Forms.Platform.SkiaSharp.Android
 {
-    public class SKViewRenderer : SKCanvasView
+	public class SKViewRenderer : SKCanvasView
     {
         SKView _skView;
-
         public SKViewRenderer(SKView view, Context context) : base(context)
         {
             _skView = view;
             PaintSurface += OnPaint;
-            _skView.Invalidated += OnViewInvalidated; 
-        }
+            _skView.Invalidated += OnViewInvalidated;
+			this.Touch += (s, e) =>
+			{
+				if (e.Event.Action != global::Android.Views.MotionEventActions.Up)
+					return;
 
-        void OnViewInvalidated(object sender, EventArgs e)
+				_skView.HandleTouch(new TouchData()
+				{
+					Action = e.Event.Action == global::Android.Views.MotionEventActions.Up ? TouchAction.Tap : TouchAction.None,					
+					Point= new Point(e.Event.RawX, e.Event.RawY)
+				});
+			};
+        }
+		
+		void OnViewInvalidated(object sender, EventArgs e)
         {			
             _skView.Layout(_skView.Frame);
             _skView.Invalidate();

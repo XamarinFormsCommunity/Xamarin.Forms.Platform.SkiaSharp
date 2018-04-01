@@ -8,11 +8,11 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 {
     public class VisualElementTracker : IDisposable
     {
-        private bool _disposed;
-        private VisualElement _element;
-        private Rectangle _lastBounds;
-        private Rectangle _lastParentBounds;
-        private int _updateCount;
+        bool _disposed;
+        VisualElement _element;
+        Rectangle _lastBounds;
+        Rectangle _lastParentBounds;
+        int _updateCount;
 
         readonly EventHandler<EventArg<VisualElement>> _batchCommittedHandler;
         readonly PropertyChangedEventHandler _propertyChangedHandler;
@@ -28,10 +28,19 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
             Renderer = renderer ?? throw new ArgumentNullException(nameof(renderer));
             renderer.ElementChanged += OnRendererElementChanged;
-            SetElement(null, renderer.Element);
+			renderer.NativeView.Tap += NativeView_Tap;
+            SetElement(null, renderer.Element);	
         }
 
-        IVisualElementRenderer Renderer { get; set; }
+		void NativeView_Tap(object sender, EventArgs e)
+		{
+			if (_element is View view)
+				foreach (var recognizer in view.GestureRecognizers)
+					if (recognizer is TapGestureRecognizer tapRecognizer)
+						tapRecognizer.Command?.Execute(tapRecognizer.CommandParameter);
+		}
+
+		IVisualElementRenderer Renderer { get; set; }
 
         public void Dispose()
         {

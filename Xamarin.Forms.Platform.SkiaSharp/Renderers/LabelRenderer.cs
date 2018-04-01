@@ -5,13 +5,15 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
 {
     public class LabelRenderer : ViewRenderer<Label, Native.Label>
     {
+		Native.Label _nativeControl;
+
         protected override void OnElementChanged(ElementChangedEventArgs<Label> e)
         {
             if (e.NewElement != null)
             {
                 if (Control == null)
                 {
-                    SetNativeControl(new Native.Label());
+                    SetNativeControl(_nativeControl = new Native.Label());
                 }
 
                 UpdateText();
@@ -21,7 +23,9 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
             base.OnElementChanged(e);
         }
 
-        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+		public new Native.SKView NativeView => _nativeControl;
+
+		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
 

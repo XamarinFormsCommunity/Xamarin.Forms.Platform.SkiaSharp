@@ -36,11 +36,18 @@ namespace Xamarin.Forms.Controls
 			grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Star });
 
 			var sl = new StackLayout();
-			sl.Children.Add(new Label() { Text = "First Line", HeightRequest=50 });
+			sl.Children.Add(new Label() { Text = "First Line", HeightRequest = 50 });
 			sl.Children.Add(new Label() { Text = "Second Line" });
 			sl.Children.Add(new Label() { Text = "Third Line" });
 
 			var label = new Label() { Text = "Next Row" };
+			label.GestureRecognizers.Add(new TapGestureRecognizer()
+			{
+				Command = new Command(() =>
+				{
+					label.Text = "I Tapped It!";
+				})
+			});
 
 			grid.AddChild(sl, 0, 0);
 			grid.AddChild(label, 0, 1);
@@ -71,8 +78,8 @@ namespace Xamarin.Forms.Controls
 		public Page CreateDefaultMainPage()
 		{
 			var layout = new StackLayout { BackgroundColor = Color.Red };
-			layout.Children.Add(new Label { Text ="This is master Page" });
-			var master = new ContentPage { Title = "Master", Content = layout,  BackgroundColor = Color.SkyBlue };
+			layout.Children.Add(new Label { Text = "This is master Page" });
+			var master = new ContentPage { Title = "Master", Content = layout, BackgroundColor = Color.SkyBlue };
 			master.On<iOS>().SetUseSafeArea(true);
 			return new MasterDetailPage
 			{
@@ -175,7 +182,7 @@ namespace Xamarin.Forms.Controls
 				// Set up a delegate to handle the navigation to the test page
 				EventHandler toTestPage = null;
 
-				toTestPage = delegate(object sender, EventArgs e) 
+				toTestPage = delegate (object sender, EventArgs e)
 				{
 					Current.MainPage.Navigation.PushModalAsync(TestCases.GetTestCases());
 					TestCases.TestCaseScreen.PageToAction[test]();
@@ -189,7 +196,7 @@ namespace Xamarin.Forms.Controls
 
 				return true;
 			}
-			catch (Exception ex) 
+			catch (Exception ex)
 			{
 				Log.Warning("UITests", $"Error attempting to navigate directly to {test}: {ex}");
 
@@ -197,7 +204,7 @@ namespace Xamarin.Forms.Controls
 
 			return false;
 		}
-		
+
 		public void Reset()
 		{
 			SetMainPage(CreateDefaultMainPage());

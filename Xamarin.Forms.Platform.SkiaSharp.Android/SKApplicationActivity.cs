@@ -53,14 +53,15 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Android
 
             _canvas = new Platform();
             var platformRenderer = new PlatformRenderer(_canvas);
-
+		
             if (_application != null)
                 _application.Platform = _canvas;
 
             _canvas.SetPage(page);
 
             var view = _canvas.PlatformRenderer;
-            var renderer = new SKViewRenderer(view, this);		
+            var renderer = new SKViewRenderer(view, this);
+
             _layout.AddView(renderer);
         }
     }
