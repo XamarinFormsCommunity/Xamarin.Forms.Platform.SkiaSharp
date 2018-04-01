@@ -29,8 +29,28 @@ namespace Xamarin.Forms.Controls
 		public App()
 		{
 			_testCloudService = DependencyService.Get<ITestCloudService>();
-			
-			SetMainPage(CreateDefaultMainPage());
+
+			// This is temporary while working on Layout :)
+			var grid = new Grid();
+			grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Star });
+			grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Star });
+
+			var sl = new StackLayout();
+			sl.Children.Add(new Label() { Text = "First Line", HeightRequest=50 });
+			sl.Children.Add(new Label() { Text = "Second Line" });
+			sl.Children.Add(new Label() { Text = "Third Line" });
+
+			var label = new Label() { Text = "Next Row" };
+
+			grid.AddChild(sl, 0, 0);
+			grid.AddChild(label, 0, 1);
+
+			MainPage = new ContentPage()
+			{
+				Content = grid
+			};
+
+			//SetMainPage(CreateDefaultMainPage());
 
 			//// Uncomment to verify that there is no gray screen displayed between the blue splash and red MasterDetailPage.
 			//SetMainPage(new Bugzilla44596SplashPage(() =>

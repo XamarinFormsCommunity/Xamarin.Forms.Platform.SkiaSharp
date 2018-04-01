@@ -7,7 +7,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Native
 {
     public class SKView
     {
-        public const int InvalidateTrottle = 10;
+        public const int InvalidateThrottle = 10;
 
         private bool _isInvalidated;
         private SKColor _backgroundColor;
@@ -52,7 +52,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Native
 
         public List<SKView> Children => _children;
 
-        public virtual SKSize Measure(SKSize available) => available;
+		public virtual SKSize Measure(SKSize available) => available;
 
         public virtual void Render(SKCanvas canvas)
         {
@@ -66,7 +66,8 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Native
             }
         }
 
-        public virtual void Layout(SKRect frame) { }
+        public virtual void Layout(SKRect frame) {
+		}
 
         protected virtual void Render(SKCanvas canvas, SKRect frame)
         {
@@ -89,7 +90,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Native
             {
                 _isInvalidated = true;
 
-                await Task.Delay(InvalidateTrottle);
+                await Task.Delay(InvalidateThrottle);
 
                 Invalidated?.Invoke(this, EventArgs.Empty);
 

@@ -8,9 +8,9 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Android
 {
     public class SKApplicationActivity : Activity
     {
-        private Application _application;
-        private Platform _canvas;
-        private LinearLayout _layout;
+        Application _application;
+        Platform _canvas;
+        LinearLayout _layout;
 
         protected void LoadApplication(Application application)
         {
@@ -29,18 +29,18 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Android
             SetContentView(_layout);
         }
 
-        private void AppOnPropertyChanged(object sender, PropertyChangedEventArgs args)
+        void AppOnPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
             if (args.PropertyName == "MainPage")
                 InternalSetPage(_application.MainPage);
         }
 
-        private void SetMainPage()
+        void SetMainPage()
         {
             InternalSetPage(_application.MainPage);
         }
 
-        private void InternalSetPage(Page page)
+        void InternalSetPage(Page page)
         {
             if (!Forms.IsInitialized)
                 throw new InvalidOperationException("Call Forms.Init (Activity, Bundle) before this");
@@ -60,7 +60,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Android
             _canvas.SetPage(page);
 
             var view = _canvas.PlatformRenderer;
-            var renderer = new SKViewRenderer(view, this);
+            var renderer = new SKViewRenderer(view, this);		
             _layout.AddView(renderer);
         }
     }

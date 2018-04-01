@@ -8,7 +8,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Android
 {
     public class SKViewRenderer : SKCanvasView
     {
-        private SKView _skView;
+        SKView _skView;
 
         public SKViewRenderer(SKView view, Context context) : base(context)
         {
@@ -17,17 +17,18 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Android
             _skView.Invalidated += OnViewInvalidated; 
         }
 
-        private void OnViewInvalidated(object sender, EventArgs e)
-        {
+        void OnViewInvalidated(object sender, EventArgs e)
+        {			
             _skView.Layout(_skView.Frame);
             _skView.Invalidate();
+			this.Invalidate(); // Refresh the whole canvas
         }
 
-        private void OnPaint(object sender, SKPaintSurfaceEventArgs e)
+        void OnPaint(object sender, SKPaintSurfaceEventArgs e)
         {
             var surface = e.Surface;
             var canvas = surface.Canvas;
-
+			
             canvas.Clear(SKColors.White);
             _skView.Render(canvas);
         }
@@ -39,6 +40,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Android
             if (w != oldw || h != oldh)
             {
                 _skView.Frame = SKRect.Create(SKPoint.Empty, new SKSize(w, h));
+				OnViewInvalidated(null, null); // Need to trigger a refresh
             }
         }
     }

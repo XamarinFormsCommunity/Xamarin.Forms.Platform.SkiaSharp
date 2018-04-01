@@ -41,7 +41,23 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Native
             }
         }
 
-        protected override void Render(SKCanvas canvas, SKRect frame)
+		public override SKSize Measure(SKSize available)
+		{
+			using (var paint = new SKPaint
+			{
+				IsAntialias = true,
+				Style = SKPaintStyle.Fill,
+				TextSize = TextSize,
+				Color = TextColor
+			})
+			{
+				var bounds = new SKRect();
+				paint.MeasureText(Text, ref bounds);
+				return new SKSize(bounds.Width, bounds.Height);
+			}
+		}
+
+		protected override void Render(SKCanvas canvas, SKRect frame)
         {
             base.Render(canvas, frame);
 
