@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Xamarin.Forms.Maps.GTK</id>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>microsoft xamarin</owners>
+    <tags>xamarin forms maps xamarinforms xamarinformsmaps xamarin.forms.maps gtk gtk-sharp linux</tags>
+    <licenseUrl>http://aka.ms/xamarin-forms-license</licenseUrl>
+    <iconUrl>http://xamarin.com/content/images/nuget/xamarin.png</iconUrl>
+    <projectUrl>http://xamarin.com/forms</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Xamarin.Forms.Maps Renderer for GTK</description>
+    <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+    <dependencies>
+      <group>
+        <dependency id="Xamarin.Forms" version="$version$"/>
+        <dependency id="Xamarin.Forms.Maps" version="$version$" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\Xamarin.Forms.Platform.GTK\Libs\GMaps\GMap.NET.Core.dll" target="lib\net45" />
+    <file src="..\Xamarin.Forms.Platform.GTK\Libs\GMaps\GMap.NET.GTK.dll" target="lib\net45" />
+    <file src="..\Xamarin.Forms.Maps.GTK\bin\$Configuration$\Xamarin.Forms.Maps.GTK.dll" target="lib\net45"/>
+    <file src="..\Xamarin.Forms.Maps.GTK\bin\$Configuration$\Xamarin.Forms.Maps.GTK.*pdb" target="lib\net45"/>
+  </files>
+</package>

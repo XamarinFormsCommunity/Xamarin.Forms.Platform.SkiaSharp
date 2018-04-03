@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Xamarin.Forms.AppLinks</id>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>microsoft xamarin</owners>
+    <tags>xamarin forms applinks xamarinforms xamarin.forms</tags>
+    <licenseUrl>http://aka.ms/xamarin-forms-license</licenseUrl>
+    <iconUrl>http://xamarin.com/content/images/nuget/xamarin.png</iconUrl>
+    <projectUrl>http://xamarin.com/forms</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Add support for deep linking and indexing app content using Xamarin.Forms on the Android Platform</description>
+    <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+    <dependencies>
+      <group targetFramework="MonoAndroid10">
+        <dependency id="Xamarin.Android.Support.v4" version="[23.3.0]"/>
+        <dependency id="Xamarin.GooglePlayServices.AppIndexing" version="[29.0.0.1]"/>
+      </group>
+      <group targetFramework="MonoAndroid71">
+        <dependency id="Xamarin.GooglePlayServices.AppIndexing" version="42.1021.1"/>
+      </group>
+    </dependencies>
+    <references>
+      <group targetFramework="MonoAndroid10">
+        <reference file="Xamarin.Forms.Platform.Android.AppLinks.dll" />
+      </group>
+    </references>
+  </metadata>
+  <files>
+    <file src="..\Xamarin.Forms.Platform.Android.AppLinks\bin\$Configuration$\Xamarin.Forms.Platform.Android.AppLinks.dll" target="lib\MonoAndroid10" />
+  </files>
+</package>
