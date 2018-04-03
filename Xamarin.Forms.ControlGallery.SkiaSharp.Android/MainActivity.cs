@@ -14,7 +14,7 @@ namespace Xamarin.Forms.ControlGallery.SkiaSharp.Droid
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            Xamarin.Forms.Platform.SkiaSharp.Forms.Init();
+			Platform.SkiaSharp.Forms.Init();
             LoadApplication(new App());
         }
     }

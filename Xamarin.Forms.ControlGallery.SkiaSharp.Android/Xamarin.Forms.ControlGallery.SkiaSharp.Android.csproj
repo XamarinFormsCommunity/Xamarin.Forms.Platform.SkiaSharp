@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D7235620-3AED-4D82-BFE8-D3F6CE39F28F}</ProjectGuid>
+    <ProjectGuid>{EBDC23D1-A286-4E86-BF84-3E5BD211A3AB}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <RootNamespace>Xamarin.Forms.ControlGallery.SkiaSharp.Android</RootNamespace>
@@ -92,7 +92,7 @@
       <Name>Xamarin.Forms.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xamarin.Forms.Platform.SkiaSharp.Android\Xamarin.Forms.Platform.SkiaSharp.Android.csproj">
-      <Project>{e2891460-1b4f-499b-aa09-c5f106583c95}</Project>
+      <Project>{89480ff8-a805-4745-a8e8-d83a0636dac5}</Project>
       <Name>Xamarin.Forms.Platform.SkiaSharp.Android</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xamarin.Forms.Platform.SkiaSharp\Xamarin.Forms.Platform.SkiaSharp.csproj">
