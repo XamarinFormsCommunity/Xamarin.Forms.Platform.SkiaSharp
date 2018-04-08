@@ -40,12 +40,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Native
                 Invalidate();
             }
         }
-
-		public override void Layout(SKRect frame)
-		{
-			base.Layout(frame);
-		}
-
+		
 		public override SKSize Measure(SKSize available)
 		{
 			using (var paint = new SKPaint
@@ -62,7 +57,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Native
 				return new SKSize(bounds.Width, bounds.Height);
 			}
 		}
-
+		
 		protected override void Render(SKCanvas canvas, SKRect frame)
         {
             base.Render(canvas, frame);

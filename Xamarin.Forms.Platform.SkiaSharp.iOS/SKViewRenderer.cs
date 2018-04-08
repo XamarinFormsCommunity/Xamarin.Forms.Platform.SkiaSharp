@@ -14,7 +14,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.iOS
             _skView = view;
             PaintSurface += OnPaint;
             view.Invalidated += OnViewInvalidated;
-        }
+		}
 
         private void OnViewInvalidated(object sender, EventArgs e)
         {
