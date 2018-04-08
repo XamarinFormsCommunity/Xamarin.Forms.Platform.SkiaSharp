@@ -9,7 +9,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
         VisualElement Element { get; }
 
-        Container NativeView { get; }
+        Container Control { get; }
 
         bool Disposed { get; }
 

@@ -38,7 +38,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 		{
 			var renderView = GetRenderer(view);
 
-			if (renderView == null || renderView.NativeView == null)
+			if (renderView == null || renderView.Control == null)
 				return new SizeRequest(Size.Zero);
 
 			return renderView.GetDesiredSize(widthConstraint, heightConstraint);
@@ -94,7 +94,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 				viewRenderer = CreateRenderer(mainPage);
 				SetRenderer(mainPage, viewRenderer);
 
-				PlatformRenderer.AddView(viewRenderer.NativeView);
+				PlatformRenderer.AddView(viewRenderer.Control);
 
 				// TODO: This is more of a hacky workaround than what I should be doing.
 				_renderer.Invalidated += (s,e) =>
@@ -109,6 +109,6 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
 	internal class DefaultRenderer : VisualElementRenderer<VisualElement, Native.SKView>
 	{
-
+		internal DefaultRenderer() => SetNativeControl(new Native.SKView());
 	}
 }

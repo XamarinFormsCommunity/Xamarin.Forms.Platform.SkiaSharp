@@ -64,7 +64,7 @@ namespace Xamarin.Forms.Controls
 
 	internal class CoreNavigationPage : NavigationPage
 	{
-		public CoreNavigationPage ()
+		public CoreNavigationPage()
 		{
 			AutomationId = "NavigationPageRoot";
 
@@ -80,7 +80,7 @@ namespace Xamarin.Forms.Controls
 
 			On<iOS>().SetPrefersLargeTitles(true);
 		
-			Navigation.PushAsync (new CoreRootPage (this));
+			Navigation.PushAsync (new CoreRootPage (this)).Wait();
 		}
 	}
 

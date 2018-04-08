@@ -4,36 +4,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
 {
     public class PageRenderer : VisualElementRenderer<Page, Native.Page>
     {
-        protected override void OnElementChanged(ElementChangedEventArgs<Page> e)
-        {
-            base.OnElementChanged(e);
+		public PageRenderer() => SetNativeControl(new Native.Page());
 
-            if (e.NewElement != null)
-            {
-                if (Control == null)
-                {
-                    SetNativeControl(new Native.Page());
-                }
-            }
-        }
-
-		public override void Render(SKCanvas canvas)
-		{
-			// This is obviously just a temporary hack
-			// To show a page inside a NavigationPage inside a Detail page of a MasterDetailPage
-			// so that we can get the ControlGalleryStarted.
-
-			// This code should be refactored to properly handle Navigation and MasterDetail pages
-			// in the future
-
-			if (Element.Parent is NavigationPage navigationPage)
-			{
-				if (navigationPage.CurrentPage == Element)
-					base.Render(canvas);
-			}
-			else if (!(Element.Parent is MasterDetailPage))
-				base.Render(canvas);	
-			
-		}
 	}
 }

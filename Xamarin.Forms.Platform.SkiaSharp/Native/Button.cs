@@ -53,6 +53,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Native
 			{
 				var bounds = new SKRect();
 				paint.MeasureText(Text, ref bounds);
+				this.Frame = new SKRect(Frame.Left, Frame.Top, Frame.Left + bounds.Width, Frame.Top + bounds.Height);
 				return new SKSize(bounds.Width, bounds.Height);
 			}
 		}
