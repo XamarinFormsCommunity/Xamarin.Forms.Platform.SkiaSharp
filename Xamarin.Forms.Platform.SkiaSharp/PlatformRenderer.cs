@@ -2,7 +2,7 @@
 {
     public class PlatformRenderer : Native.SKView
     {
-        private Platform _platform;
+        Platform _platform;
 
         public PlatformRenderer(Platform platform)
         {

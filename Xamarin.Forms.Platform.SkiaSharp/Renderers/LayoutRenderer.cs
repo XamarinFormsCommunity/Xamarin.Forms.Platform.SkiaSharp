@@ -4,7 +4,9 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
 {
     public class LayoutRenderer : ViewRenderer<Layout, Panel>
     {
-        protected override void OnElementChanged(ElementChangedEventArgs<Layout> e)
+		public LayoutRenderer() => SetNativeControl(new Panel());
+
+		protected override void OnElementChanged(ElementChangedEventArgs<Layout> e)
         {
             base.OnElementChanged(e);
 
@@ -16,5 +18,6 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
                 }
             }
         }
+
     }
 }

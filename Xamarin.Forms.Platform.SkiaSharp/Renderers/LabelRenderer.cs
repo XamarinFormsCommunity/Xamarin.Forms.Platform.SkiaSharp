@@ -5,15 +5,13 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
 {
     public class LabelRenderer : ViewRenderer<Label, Native.Label>
     {
-		Native.Label _nativeControl;
-
         protected override void OnElementChanged(ElementChangedEventArgs<Label> e)
         {
             if (e.NewElement != null)
             {
                 if (Control == null)
                 {
-                    SetNativeControl(_nativeControl = new Native.Label());
+                    SetNativeControl(new Native.Label());
                 }
 
                 UpdateText();
@@ -22,9 +20,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
 
             base.OnElementChanged(e);
         }
-
-		public new Native.SKView NativeView => _nativeControl;
-
+		
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
@@ -41,12 +37,12 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
                 UpdateTextColor();
         }
 
-        private void UpdateText()
+		void UpdateText()
         {
             Control.Text = Element.Text;
         }
 
-        private void UpdateTextColor()
+        void UpdateTextColor()
         {
             Control.TextColor = Element.TextColor.ToSkiaColor();
         }

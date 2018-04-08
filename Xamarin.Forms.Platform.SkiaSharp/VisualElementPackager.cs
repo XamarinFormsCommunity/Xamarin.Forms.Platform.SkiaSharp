@@ -4,8 +4,8 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 {
     public class VisualElementPackager : IDisposable
     {
-        private VisualElement _element;
-        private bool _isDisposed;
+        VisualElement _element;
+        bool _isDisposed;
 
         IElementController ElementController => _element;
 
@@ -62,8 +62,8 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             var viewRenderer = Platform.CreateRenderer(view);
             Platform.SetRenderer(view, viewRenderer);
 
-            var nativeView = Renderer.NativeView;
-            nativeView.AddView(viewRenderer.NativeView);
+            var nativeView = Renderer.Control;
+            nativeView.AddView(viewRenderer.Control);
         }
 
         protected virtual void OnChildRemoved(VisualElement view)
@@ -72,14 +72,14 @@ namespace Xamarin.Forms.Platform.SkiaSharp
                 return;
 
             var viewRenderer = Platform.GetRenderer(view);
-            if (viewRenderer == null || viewRenderer.NativeView == null)
+            if (viewRenderer == null || viewRenderer.Control == null)
                 return;
 
             var parentRenderer = Platform.GetRenderer(_element);
-            if (parentRenderer == null || parentRenderer.NativeView == null)
+            if (parentRenderer == null || parentRenderer.Control == null)
                 return;
 
-            parentRenderer.NativeView.RemoveView(viewRenderer.NativeView);
+            parentRenderer.Control.RemoveView(viewRenderer.Control);
         }
 
         void OnChildAdded(object sender, ElementEventArgs e)

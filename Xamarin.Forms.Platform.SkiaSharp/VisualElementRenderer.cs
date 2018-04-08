@@ -3,21 +3,20 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Xamarin.Forms.Platform.SkiaSharp.Extensions;
-using Container = Xamarin.Forms.Platform.SkiaSharp.Native.SKView;
 using Control = Xamarin.Forms.Platform.SkiaSharp.Native.SKView;
 
 namespace Xamarin.Forms.Platform.SkiaSharp
 {
-	public class VisualElementRenderer<TElement, TNativeElement> : Container, IVisualElementRenderer, IDisposable
+	public class VisualElementRenderer<TElement, TNativeElement> : IVisualElementRenderer, IDisposable
       where TElement : VisualElement
       where TNativeElement : Control
     {
-        private bool _disposed;
-        private VisualElementPackager _packager;
-        private VisualElementTracker _tracker;
+		bool _disposed = false;
+        VisualElementPackager _packager;
+        VisualElementTracker _tracker;
 
-        private readonly PropertyChangedEventHandler _propertyChangedHandler;
-        private readonly List<EventHandler<VisualElementChangedEventArgs>> _elementChangedHandlers = new List<EventHandler<VisualElementChangedEventArgs>>();
+        readonly PropertyChangedEventHandler _propertyChangedHandler;
+        readonly List<EventHandler<VisualElementChangedEventArgs>> _elementChangedHandlers = new List<EventHandler<VisualElementChangedEventArgs>>();
 
         protected VisualElementRenderer()
         {
@@ -34,8 +33,6 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
         public TElement Element { get; set; }
 
-		public Container NativeView => this;
-
 		public bool Disposed { get { return _disposed; } }
 
         VisualElement IVisualElementRenderer.Element
@@ -48,7 +45,9 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
         protected IElementController ElementController => Element as IElementController;
 
-        public event EventHandler<ElementChangedEventArgs<TElement>> ElementChanged;
+		Control IVisualElementRenderer.Control => Control;
+
+		public event EventHandler<ElementChangedEventArgs<TElement>> ElementChanged;
 
         public void Dispose()
         {
@@ -104,7 +103,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
 		public void SetElementSize(Size size)
         {
-            Xamarin.Forms.Layout.LayoutChildIntoBoundingRegion(Element,
+            Layout.LayoutChildIntoBoundingRegion(Element,
                 new Rectangle(Element.X, Element.Y, size.Width, size.Height));
         }
 
@@ -132,12 +131,13 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             UpdateBackgroundColor();
             UpdateIsVisible();
         }
+
         protected virtual void UpdateNativeControl()
         {
-
+			
         }
 
-        private void UpdateIsVisible()
+        void UpdateIsVisible()
         {
             if (_disposed || Element == null || Control == null)
                 return;
@@ -145,7 +145,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             var isVisible = Element.IsVisible;
         }
 
-        private void UpdateBackgroundColor()
+        void UpdateBackgroundColor()
         {
             if (_disposed || Element == null || Control == null)
                 return;

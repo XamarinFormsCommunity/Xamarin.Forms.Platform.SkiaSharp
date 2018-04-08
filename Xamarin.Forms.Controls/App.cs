@@ -29,7 +29,7 @@ namespace Xamarin.Forms.Controls
 		public App()
 		{
 			_testCloudService = DependencyService.Get<ITestCloudService>();
-			
+
 			SetMainPage(CreateDefaultMainPage());
 
 			//// Uncomment to verify that there is no gray screen displayed between the blue splash and red MasterDetailPage.
@@ -54,12 +54,14 @@ namespace Xamarin.Forms.Controls
 			layout.Children.Add(new Label { Text ="This is master Page" });
 			var master = new ContentPage { Title = "Master", Content = layout,  BackgroundColor = Color.SkyBlue };
 			master.On<iOS>().SetUseSafeArea(true);
-			return new MasterDetailPage
-			{
-				AutomationId = DefaultMainPageId,
-				Master = master,
-				Detail = CoreGallery.GetMainPage()
-			};
+			//return new MasterDetailPage
+			//{
+			//	AutomationId = DefaultMainPageId,
+			//	Master = master,
+			//	Detail = CoreGallery.GetMainPage()
+			//};
+			// TODO: Implement MDP on Skia, before re-enabling
+			return CoreGallery.GetMainPage();
 		}
 
 		protected override void OnAppLinkRequestReceived(Uri uri)

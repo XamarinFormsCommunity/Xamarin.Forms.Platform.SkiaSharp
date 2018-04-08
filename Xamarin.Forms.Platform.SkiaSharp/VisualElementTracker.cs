@@ -28,9 +28,11 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
             Renderer = renderer ?? throw new ArgumentNullException(nameof(renderer));
             renderer.ElementChanged += OnRendererElementChanged;
-			renderer.NativeView.Tap += NativeView_Tap;
-            SetElement(null, renderer.Element);	
-        }
+            SetElement(null, renderer.Element);
+
+			// TODO: Gesture Wireup
+			//nativeView.Tap += NativeView_Tap;
+		}
 
 		void NativeView_Tap(object sender, EventArgs e)
 		{
@@ -115,14 +117,14 @@ namespace Xamarin.Forms.Platform.SkiaSharp
                 return;
 
             OnUpdateNativeControl();
-
-            NativeControlUpdated?.Invoke(this, EventArgs.Empty);
+			
+			NativeControlUpdated?.Invoke(this, EventArgs.Empty);
         }
 
         void OnUpdateNativeControl()
         {
             var view = Renderer.Element;
-            var nativeView = Renderer.NativeView;
+            var nativeView = Renderer.Control;
 
             if (view == null || view.Batched)
                 return;
@@ -147,7 +149,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             parentBoundsChanged = true;
             bool shouldUpdate = (width > 0 || height > 0) && parent != null && (boundsChanged || parentBoundsChanged);
 
-            if (shouldUpdate)
+			if (shouldUpdate)
             {
                 nativeView.Frame = new SKRect(x, y, width, height);
             }

@@ -7,9 +7,9 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Native
         public static readonly SKColor DefaultTextColor = SKColors.Black;
         public const float DefaultTextSize = 40.0f;
 
-        private string _text;
-        private float _textSize = DefaultTextSize;
-        private SKColor _textColor = DefaultTextColor;
+        string _text;
+        float _textSize = DefaultTextSize;
+        SKColor _textColor = DefaultTextColor;
 
         public string Text
         {
@@ -41,6 +41,11 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Native
             }
         }
 
+		public override void Layout(SKRect frame)
+		{
+			base.Layout(frame);
+		}
+
 		public override SKSize Measure(SKSize available)
 		{
 			using (var paint = new SKPaint
@@ -53,6 +58,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Native
 			{
 				var bounds = new SKRect();
 				paint.MeasureText(Text, ref bounds);
+				this.Frame = new SKRect(Frame.Left, Frame.Top, Frame.Left + bounds.Width, Frame.Top + bounds.Height);
 				return new SKSize(bounds.Width, bounds.Height);
 			}
 		}

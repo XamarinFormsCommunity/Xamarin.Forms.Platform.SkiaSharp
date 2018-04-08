@@ -13,8 +13,6 @@ namespace Xamarin.Forms.Platform.SkiaSharp
         protected override void SetNativeControl(TNativeView view)
         {
             base.SetNativeControl(view);
-
-            AddView(view);
         }    		
     }
 }

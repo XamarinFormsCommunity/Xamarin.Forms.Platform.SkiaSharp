@@ -33,7 +33,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
                 UpdateSource();
         }
 
-        private async void UpdateSource()
+        async void UpdateSource()
         {
             var source = Element.Source;
 

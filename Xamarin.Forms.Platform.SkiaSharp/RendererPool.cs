@@ -14,14 +14,8 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
         public RendererPool(IVisualElementRenderer renderer, VisualElement oldElement)
         {
-            if (renderer == null)
-                throw new ArgumentNullException(nameof(renderer));
-
-            if (oldElement == null)
-                throw new ArgumentNullException(nameof(oldElement));
-
-            _oldElement = oldElement;
-            _parent = renderer;
+			_oldElement = oldElement ?? throw new ArgumentNullException(nameof(oldElement));
+            _parent = renderer ?? throw new ArgumentNullException(nameof(renderer));
         }
 
         public IVisualElementRenderer GetFreeRenderer(VisualElement view)
@@ -31,11 +25,10 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
             var rendererType = Internals.Registrar.Registered.GetHandlerType(view.GetType()) ?? typeof(ViewRenderer);
 
-            Stack<IVisualElementRenderer> renderers;
-            if (!_freeRenderers.TryGetValue(rendererType, out renderers) || renderers.Count == 0)
-                return null;
+			if (!_freeRenderers.TryGetValue(rendererType, out Stack<IVisualElementRenderer> renderers) || renderers.Count == 0)
+				return null;
 
-            var renderer = renderers.Pop();
+			var renderer = renderers.Pop();
             renderer.SetElement(view);
             return renderer;
         }
@@ -47,7 +40,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
             var sameChildrenTypes = true;
 
-            var oldChildren = ((IElementController)_oldElement).LogicalChildren;
+            var oldChildren = _oldElement.LogicalChildren;
             var newChildren = ((IElementController)newElement).LogicalChildren;
 
             if (oldChildren.Count == newChildren.Count)
@@ -78,7 +71,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             if (renderer == null)
                 return;
 
-            var subviews = renderer.NativeView.Children;
+            var subviews = renderer.Control.Children;
             for (var i = 0; i < subviews.Count; i++)
             {
                 var childRenderer = subviews[i] as IVisualElementRenderer;
@@ -91,7 +84,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
                     if (childRenderer.Element != null && ReferenceEquals(childRenderer, Platform.GetRenderer(childRenderer.Element)))
                         childRenderer.Element.ClearValue(Platform.RendererProperty);
                 }
-                renderer.NativeView.RemoveView(subviews[i]);
+                renderer.Control.RemoveView(subviews[i]);
             }
         }
 
@@ -104,7 +97,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
                 {
                     var renderer = GetFreeRenderer(child) ?? Platform.CreateRenderer(child);
                     Platform.SetRenderer(child, renderer);
-                    _parent.NativeView.AddView(renderer.NativeView);
+                    _parent.Control.AddView(renderer.Control);
                 }
             }
         }
@@ -114,11 +107,10 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             var reflectableType = renderer as System.Reflection.IReflectableType;
             var rendererType = reflectableType != null ? reflectableType.GetTypeInfo().AsType() : renderer.GetType();
 
-            Stack<IVisualElementRenderer> renderers;
-            if (!_freeRenderers.TryGetValue(rendererType, out renderers))
-                _freeRenderers[rendererType] = renderers = new Stack<IVisualElementRenderer>();
+			if (!_freeRenderers.TryGetValue(rendererType, out Stack<IVisualElementRenderer> renderers))
+				_freeRenderers[rendererType] = renderers = new Stack<IVisualElementRenderer>();
 
-            renderers.Push(renderer);
+			renderers.Push(renderer);
         }
 
         void UpdateRenderers(Element newElement)
@@ -128,7 +120,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             if (newElementController.LogicalChildren.Count == 0)
                 return;
 
-            var subviews = _parent.NativeView.Children;
+            var subviews = _parent.Control.Children;
             for (var i = 0; i < subviews.Count; i++)
             {
                 var childRenderer = subviews[i] as IVisualElementRenderer;
