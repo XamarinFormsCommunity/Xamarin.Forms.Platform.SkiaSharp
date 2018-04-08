@@ -28,7 +28,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
                 UpdateColor();
         }
 
-        private void UpdateColor()
+        void UpdateColor()
         {
             Control.Color = Element.Color.ToSkiaColor();
         }

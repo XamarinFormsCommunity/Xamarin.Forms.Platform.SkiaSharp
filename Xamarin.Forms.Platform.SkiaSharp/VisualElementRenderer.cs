@@ -11,12 +11,12 @@ namespace Xamarin.Forms.Platform.SkiaSharp
       where TElement : VisualElement
       where TNativeElement : Control
     {
-        private bool _disposed;
-        private VisualElementPackager _packager;
-        private VisualElementTracker _tracker;
+		bool _disposed = false;
+        VisualElementPackager _packager;
+        VisualElementTracker _tracker;
 
-        private readonly PropertyChangedEventHandler _propertyChangedHandler;
-        private readonly List<EventHandler<VisualElementChangedEventArgs>> _elementChangedHandlers = new List<EventHandler<VisualElementChangedEventArgs>>();
+        readonly PropertyChangedEventHandler _propertyChangedHandler;
+        readonly List<EventHandler<VisualElementChangedEventArgs>> _elementChangedHandlers = new List<EventHandler<VisualElementChangedEventArgs>>();
 
         protected VisualElementRenderer()
         {
@@ -137,7 +137,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 			
         }
 
-        private void UpdateIsVisible()
+        void UpdateIsVisible()
         {
             if (_disposed || Element == null || Control == null)
                 return;
@@ -145,7 +145,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
             var isVisible = Element.IsVisible;
         }
 
-        private void UpdateBackgroundColor()
+        void UpdateBackgroundColor()
         {
             if (_disposed || Element == null || Control == null)
                 return;

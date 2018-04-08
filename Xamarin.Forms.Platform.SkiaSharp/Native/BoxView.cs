@@ -4,8 +4,8 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Native
 {
     public class BoxView : SKView
     {
-        private SKColor _color;
-        private SKPoint _cornerRadius;
+        SKColor _color;
+        SKPoint _cornerRadius;
 
         public SKColor Color
         {

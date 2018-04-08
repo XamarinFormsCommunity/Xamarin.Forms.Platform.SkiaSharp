@@ -9,8 +9,8 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 {
     public class SKExpressionSearch : ExpressionVisitor, IExpressionSearch
     {
-        private List<object> _results;
-        private Type _targetType;
+        List<object> _results;
+        Type _targetType;
 
         public List<T> FindObjects<T>(Expression expression) where T : class
         {

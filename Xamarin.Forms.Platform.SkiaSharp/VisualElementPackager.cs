@@ -4,8 +4,8 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 {
     public class VisualElementPackager : IDisposable
     {
-        private VisualElement _element;
-        private bool _isDisposed;
+        VisualElement _element;
+        bool _isDisposed;
 
         IElementController ElementController => _element;
 

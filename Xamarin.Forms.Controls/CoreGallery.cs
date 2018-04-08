@@ -79,8 +79,8 @@ namespace Xamarin.Forms.Controls
 			});
 
 			On<iOS>().SetPrefersLargeTitles(true);
-		
-			Navigation.PushAsync (new CoreRootPage (this)).Wait();
+
+			Navigation.PushAsync(new CoreRootPage(this));
 		}
 	}
 
@@ -446,7 +446,6 @@ namespace Xamarin.Forms.Controls
 							GC.Collect ();
 						})
 					}
-
 				}
 			};
 

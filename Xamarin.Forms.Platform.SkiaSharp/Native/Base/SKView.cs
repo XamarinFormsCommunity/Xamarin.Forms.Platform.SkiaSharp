@@ -77,6 +77,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Native
         }
 
         public virtual void Layout(SKRect frame) {
+			
 		}
 
         protected virtual void Render(SKCanvas canvas, SKRect frame)

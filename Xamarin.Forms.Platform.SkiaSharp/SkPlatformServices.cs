@@ -13,7 +13,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 {
     public class SKPlatformServices : IPlatformServices
     {
-        private static readonly MD5CryptoServiceProvider Checksum = new MD5CryptoServiceProvider();
+        static readonly MD5CryptoServiceProvider Checksum = new MD5CryptoServiceProvider();
 
         public bool IsInvokeRequired => throw new NotImplementedException();
 
@@ -124,7 +124,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 			new Timer(TimerCallback, callback, Convert.ToInt32(interval.TotalMilliseconds), Timeout.Infinite);
 		}
 
-        private static int Hex(int v)
+        static int Hex(int v)
         {
             if (v < 10)
                 return '0' + v;

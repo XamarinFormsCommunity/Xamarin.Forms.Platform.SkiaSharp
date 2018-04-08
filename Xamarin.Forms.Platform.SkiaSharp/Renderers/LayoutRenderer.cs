@@ -18,5 +18,6 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
                 }
             }
         }
+
     }
 }

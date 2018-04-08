@@ -25,24 +25,22 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Renderers
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if (e.PropertyName == Label.FontProperty.PropertyName)
+            if (e.PropertyName == Button.FontProperty.PropertyName)
                 UpdateText();
-            else if (e.PropertyName == Label.TextProperty.PropertyName)
+            else if (e.PropertyName == Button.TextProperty.PropertyName)
                 UpdateText();
-            else if (e.PropertyName == Label.FontAttributesProperty.PropertyName)
-                UpdateText();
-            else if (e.PropertyName == Label.FormattedTextProperty.PropertyName)
-                UpdateText();
-            else if (e.PropertyName == Label.TextColorProperty.PropertyName)
+            else if (e.PropertyName == Button.FontAttributesProperty.PropertyName)
+                UpdateText();          
+            else if (e.PropertyName == Button.TextColorProperty.PropertyName)
                 UpdateTextColor();
         }
 
-        private void UpdateText()
+        void UpdateText()
         {
             Control.Text = Element.Text;
         }
 
-        private void UpdateTextColor()
+        void UpdateTextColor()
         {
             Control.TextColor = Element.TextColor.ToSkiaColor();
         }

@@ -7,7 +7,9 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Native
 
 		public override SKSize Measure(SKSize available)
 		{
-			return new SKSize(available.Width, 50);
+			var bounds = new SKRect() { Size = new SKSize(100,50) };
+			this.Frame = new SKRect(Frame.Left, Frame.Top, Frame.Left + bounds.Width, Frame.Top + bounds.Height);
+			return bounds.Size;
 		}
 		
 		protected override void Render(SKCanvas canvas, SKRect frame)

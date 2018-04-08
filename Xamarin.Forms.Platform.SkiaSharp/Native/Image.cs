@@ -4,7 +4,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Native
 {
     public class Image : SKView
     {
-        private SKBitmap _source;
+        SKBitmap _source;
 
         public Image()
         {

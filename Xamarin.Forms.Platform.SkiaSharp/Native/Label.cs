@@ -7,9 +7,9 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Native
 		public static readonly SKColor DefaultTextColor = SKColors.Black;
 		public const float DefaultTextSize = 40.0f;
 
-		private string _text;
-		private float _textSize = DefaultTextSize;
-		private SKColor _textColor = DefaultTextColor;
+		string _text;
+		float _textSize = DefaultTextSize;
+		SKColor _textColor = DefaultTextColor;
 
 		public string Text
 		{
@@ -27,18 +27,7 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Native
 			set
 			{
 				_textSize = value;
-				using (var paint = new SKPaint
-				{
-					IsAntialias = true,
-					Style = SKPaintStyle.Fill,
-					TextSize = TextSize,
-					Color = TextColor
-				})
-				{
-					var bounds = new SKRect();
-					paint.MeasureText(Text, ref bounds);
-					this.Frame = new SKRect(Frame.Left, Frame.Top, Frame.Left + bounds.Width, Frame.Top + bounds.Height);
-				}
+				Invalidate();
 			}
 		}
 
@@ -54,9 +43,20 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Native
 
 		public override SKSize Measure(SKSize available)
 		{
-			return new SKSize(Frame.Width, Frame.Height);
+			using (var paint = new SKPaint
+			{
+				IsAntialias = true,
+				Style = SKPaintStyle.Fill,
+				TextSize = TextSize,
+				Color = TextColor
+			})
+			{
+				var bounds = new SKRect();
+				paint.MeasureText(Text, ref bounds);
+				this.Frame = new SKRect(Frame.Left, Frame.Top, Frame.Left + bounds.Width, Frame.Top + bounds.Height);
+				return new SKSize(bounds.Width, bounds.Height);
+			}
 		}
-
 
 		protected override void Render(SKCanvas canvas, SKRect frame)
 		{
