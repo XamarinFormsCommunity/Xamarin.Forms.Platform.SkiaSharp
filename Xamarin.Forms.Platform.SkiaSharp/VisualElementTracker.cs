@@ -6,37 +6,36 @@ using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Platform.SkiaSharp
 {
-    public class VisualElementTracker : IDisposable
-    {
-        bool _disposed;
-        VisualElement _element;
-        Rectangle _lastBounds;
-        Rectangle _lastParentBounds;
-        int _updateCount;
+	public class VisualElementTracker : IDisposable
+	{
+		bool _disposed;
+		VisualElement _element;
+		Rectangle _lastBounds;
+		Rectangle _lastParentBounds;
+		int _updateCount;
 
-        readonly EventHandler<EventArg<VisualElement>> _batchCommittedHandler;
-        readonly PropertyChangedEventHandler _propertyChangedHandler;
-        readonly EventHandler _sizeChangedEventHandler;
+		readonly EventHandler<EventArg<VisualElement>> _batchCommittedHandler;
+		readonly PropertyChangedEventHandler _propertyChangedHandler;
+		readonly EventHandler _sizeChangedEventHandler;
 
-        public event EventHandler NativeControlUpdated;
+		public event EventHandler NativeControlUpdated;
 
-        public VisualElementTracker(IVisualElementRenderer renderer)
-        {
-            _propertyChangedHandler = HandlePropertyChanged;
-            _sizeChangedEventHandler = HandleSizeChanged;
-            _batchCommittedHandler = HandleRedrawNeeded;
+		public VisualElementTracker(IVisualElementRenderer renderer)
+		{
+			_propertyChangedHandler = HandlePropertyChanged;
+			_sizeChangedEventHandler = HandleSizeChanged;
+			_batchCommittedHandler = HandleRedrawNeeded;
 
-            Renderer = renderer ?? throw new ArgumentNullException(nameof(renderer));
-            renderer.ElementChanged += OnRendererElementChanged;
-            SetElement(null, renderer.Element);
-
-			// TODO: Gesture Wireup
-			//nativeView.Tap += NativeView_Tap;
+			Renderer = renderer ?? throw new ArgumentNullException(nameof(renderer));
+			renderer.ElementChanged += OnRendererElementChanged;
+			SetElement(null, renderer.Element);
 		}
 
 		void NativeView_Tap(object sender, EventArgs e)
 		{
-			if (_element is View view)
+			if (_element is Button button)
+				button.SendClicked();
+			else if (_element is View view)
 				foreach (var recognizer in view.GestureRecognizers)
 					if (recognizer is TapGestureRecognizer tapRecognizer)
 						tapRecognizer.Command?.Execute(tapRecognizer.CommandParameter);
@@ -44,122 +43,133 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
 		IVisualElementRenderer Renderer { get; set; }
 
-        public void Dispose()
-        {
-            Dispose(true);
-        }
+		public void Dispose()
+		{
+			Dispose(true);
+		}
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-                return;
+		protected virtual void Dispose(bool disposing)
+		{
+			if (_disposed)
+				return;
 
-            _disposed = true;
+			_disposed = true;
 
-            if (disposing)
-            {
-                SetElement(_element, null);
+			if (disposing)
+			{
+				SetElement(_element, null);
+				var nativeView = Renderer.Control;
 
-                Renderer.ElementChanged -= OnRendererElementChanged;
-                Renderer = null;
-            }
-        }
+				if (nativeView != null)
+					nativeView.Tap -= NativeView_Tap;
 
-        void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == VisualElement.XProperty.PropertyName || e.PropertyName == VisualElement.YProperty.PropertyName || e.PropertyName == VisualElement.WidthProperty.PropertyName ||
-                e.PropertyName == VisualElement.HeightProperty.PropertyName)
-                UpdateNativeControl();
-        }
+				Renderer.ElementChanged -= OnRendererElementChanged;
+				Renderer = null;
+			}
+		}
 
-        void HandleSizeChanged(object sender, EventArgs e)
-        {
-            UpdateNativeControl();
-        }
+		void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == VisualElement.XProperty.PropertyName || e.PropertyName == VisualElement.YProperty.PropertyName || e.PropertyName == VisualElement.WidthProperty.PropertyName ||
+				e.PropertyName == VisualElement.HeightProperty.PropertyName)
+				UpdateNativeControl();
+		}
 
-        void HandleRedrawNeeded(object sender, EventArgs e)
-        {
-            UpdateNativeControl();
-        }
+		void HandleSizeChanged(object sender, EventArgs e)
+		{
+			UpdateNativeControl();
+		}
 
-        void OnRendererElementChanged(object s, VisualElementChangedEventArgs e)
-        {
-            if (_element == e.NewElement)
-                return;
+		void HandleRedrawNeeded(object sender, EventArgs e)
+		{
+			UpdateNativeControl();
+		}
 
-            SetElement(_element, e.NewElement);
-        }
+		void OnRendererElementChanged(object s, VisualElementChangedEventArgs e)
+		{
+			if (_element == e.NewElement)
+				return;
 
-        void SetElement(VisualElement oldElement, VisualElement newElement)
-        {
-            if (oldElement != null)
-            {
-                oldElement.PropertyChanged -= _propertyChangedHandler;
-                oldElement.SizeChanged -= _sizeChangedEventHandler;
-                oldElement.BatchCommitted -= _batchCommittedHandler;
-            }
+			SetElement(_element, e.NewElement);
+		}
 
-            _element = newElement;
+		void SetElement(VisualElement oldElement, VisualElement newElement)
+		{
+			if (oldElement != null)
+			{
+				oldElement.PropertyChanged -= _propertyChangedHandler;
+				oldElement.SizeChanged -= _sizeChangedEventHandler;
+				oldElement.BatchCommitted -= _batchCommittedHandler;
+			}
 
-            if (newElement != null)
-            {
-                newElement.BatchCommitted += _batchCommittedHandler;
-                newElement.PropertyChanged += _propertyChangedHandler;
-                newElement.SizeChanged += _sizeChangedEventHandler;
+			_element = newElement;
 
-                UpdateNativeControl();
-            }
-        }
+			if (newElement != null)
+			{
+				newElement.BatchCommitted += _batchCommittedHandler;
+				newElement.PropertyChanged += _propertyChangedHandler;
+				newElement.SizeChanged += _sizeChangedEventHandler;
 
-        void UpdateNativeControl()
-        {
-            if (_disposed)
-                return;
+				UpdateNativeControl();
+			}
+		}
 
-            OnUpdateNativeControl();
-			
+		void UpdateNativeControl()
+		{
+			if (_disposed)
+				return;
+
+			OnUpdateNativeControl();
+
 			NativeControlUpdated?.Invoke(this, EventArgs.Empty);
-        }
+		}
 
-        void OnUpdateNativeControl()
-        {
-            var view = Renderer.Element;
-            var nativeView = Renderer.Control;
+		void OnUpdateNativeControl()
+		{
+			var view = Renderer.Element;
+			var nativeView = Renderer.Control;
 
-            if (view == null || view.Batched)
-                return;
+			if (view == null || view.Batched)
+				return;
 
-            var boundsChanged = _lastBounds != view.Bounds;
-            var viewParent = view.RealParent as VisualElement;
-            var parentBoundsChanged = _lastParentBounds != (viewParent == null ? Rectangle.Zero : viewParent.Bounds);
-            var thread = !boundsChanged;
+			// Attach Gesture Handling
+			if (nativeView != null)
+			{
+				nativeView.Tap -= NativeView_Tap;
+				nativeView.Tap += NativeView_Tap;
+			}
 
-            var width = (float)view.Width;
-            var height = (float)view.Height;
-            var x = (float)view.X;
-            var y = (float)view.Y;
+			var boundsChanged = _lastBounds != view.Bounds;
+			var viewParent = view.RealParent as VisualElement;
+			var parentBoundsChanged = _lastParentBounds != (viewParent == null ? Rectangle.Zero : viewParent.Bounds);
+			var thread = !boundsChanged;
 
-            var updateTarget = Interlocked.Increment(ref _updateCount);
+			var width = (float)view.Width;
+			var height = (float)view.Height;
+			var x = (float)view.X;
+			var y = (float)view.Y;
 
-            if (updateTarget != _updateCount)
-                return;
+			var updateTarget = Interlocked.Increment(ref _updateCount);
 
-            var parent = view.RealParent;
+			if (updateTarget != _updateCount)
+				return;
 
-            parentBoundsChanged = true;
-            bool shouldUpdate = (width > 0 || height > 0) && parent != null && (boundsChanged || parentBoundsChanged);
+			var parent = view.RealParent;
+
+			parentBoundsChanged = true;
+			bool shouldUpdate = (width > 0 || height > 0) && parent != null && (boundsChanged || parentBoundsChanged);
 
 			if (shouldUpdate)
-            {
-                nativeView.Frame = new SKRect(x, y, width, height);
-            }
-            else if (width <= 0 || height <= 0)
-            {
-                return;
-            }
+			{
+				nativeView.Frame = new SKRect(x, y, width + x, height + y); //NOTE: This is odd, I needed to add the y to the height and width to get a property height/width.
+			}
+			else if (width <= 0 || height <= 0)
+			{
+				return;
+			}
 
-            _lastBounds = view.Bounds;
-            _lastParentBounds = viewParent?.Bounds ?? Rectangle.Zero;
-        }
-    }
+			_lastBounds = view.Bounds;
+			_lastParentBounds = viewParent?.Bounds ?? Rectangle.Zero;
+		}
+	}
 }

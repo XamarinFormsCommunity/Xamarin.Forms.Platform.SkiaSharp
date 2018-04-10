@@ -16,6 +16,6 @@ namespace Xamarin.Forms.ControlGallery.SkiaSharp.Droid
             base.OnCreate(bundle);
             Xamarin.Forms.Platform.SkiaSharp.Forms.Init();
             LoadApplication(new App());
-        }
+		}
     }
 }

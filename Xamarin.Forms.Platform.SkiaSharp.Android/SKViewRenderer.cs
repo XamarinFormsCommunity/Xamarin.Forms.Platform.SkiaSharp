@@ -1,4 +1,5 @@
 ﻿using Android.Content;
+using Android.Views;
 using SkiaSharp;
 using SkiaSharp.Views.Android;
 using System;
@@ -13,20 +14,26 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Android
         {
             _skView = view;
             PaintSurface += OnPaint;
+			
             _skView.Invalidated += OnViewInvalidated;
-			this.Touch += (s, e) =>
-			{
-				if (e.Event.Action != global::Android.Views.MotionEventActions.Up)
-					return;
-
-				_skView.HandleTouch(new TouchData()
-				{
-					Action = e.Event.Action == global::Android.Views.MotionEventActions.Up ? TouchAction.Tap : TouchAction.None,					
-					Point= new Point(e.Event.RawX, e.Event.RawY)
-				});
-			};
         }
-		
+
+		public override bool OnTouchEvent(MotionEvent e)
+		{
+			if (e.Action != MotionEventActions.Down)
+				return false;
+
+			var data = new TouchData()
+			{
+				Action = e.Action == MotionEventActions.Down ? TouchAction.Tap : TouchAction.None,
+				Point = new Point(e.RawX, e.RawY)
+			};
+
+			_skView.HandleTouch(data);
+
+			return data.Handled;
+		}
+
 		void OnViewInvalidated(object sender, EventArgs e)
         {			
             _skView.Layout(_skView.Frame);

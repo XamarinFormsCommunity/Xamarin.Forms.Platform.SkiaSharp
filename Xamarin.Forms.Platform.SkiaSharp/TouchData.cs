@@ -1,11 +1,11 @@
 ﻿namespace Xamarin.Forms.Platform.SkiaSharp
 {
-	public struct TouchData
+	public class TouchData
     {
-		public Point Point;
-		public TouchAction Action;
-
-    }
+		public Point Point { get; set; }
+		public TouchAction Action { get; set; }
+		public bool Handled { get; set; }
+	}
 
 	public enum TouchAction
 	{
