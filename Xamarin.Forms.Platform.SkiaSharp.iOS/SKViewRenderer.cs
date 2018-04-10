@@ -1,59 +1,91 @@
-﻿using SkiaSharp;
+﻿using Foundation;
+using SkiaSharp;
 using SkiaSharp.Views.iOS;
 using System;
+using System.Linq;
+using UIKit;
 using Xamarin.Forms.Platform.SkiaSharp.Native;
 
 namespace Xamarin.Forms.Platform.SkiaSharp.iOS
 {
-    public class SKViewRenderer : SKCanvasView
-    {
-        private SKView _skView;
+	public class SKViewRenderer : SKCanvasView
+	{
+		private SKView _skView;
 
-        public SKViewRenderer(SKView view)
-        {
-            _skView = view;
-            PaintSurface += OnPaint;
-            view.Invalidated += OnViewInvalidated;
+		public SKViewRenderer(SKView view)
+		{
+			_skView = view;
+			PaintSurface += OnPaint;
+			view.Invalidated += OnViewInvalidated;
+			MultipleTouchEnabled = true;
+			this.UserInteractionEnabled = true;
 		}
 
-        private void OnViewInvalidated(object sender, EventArgs e)
-        {
-            _skView.Layout(_skView.Frame);
-            SetNeedsDisplayInRect(Bounds);
-        }
+		public override void TouchesEnded(NSSet touches, UIEvent evt)
+		{
+			base.TouchesEnded(touches, evt);
 
-        private void OnPaint(object sender, SKPaintSurfaceEventArgs e)
-        {
-            e.Surface.Canvas.Clear(SKColors.White);
-            _skView.Render(e.Surface.Canvas);
-        }
+			foreach (UITouch touch in touches.Cast<UITouch>())
+			{
+				TouchEvent(touch);				
+			}
+		}
 
-        public override void LayoutSubviews()
-        {
-            base.LayoutSubviews();
-            _skView.Frame = SKRect.Create(SKPoint.Empty, ToPlatform(new SKSize((float)Bounds.Size.Width, (float)Bounds.Size.Height)));
-        }
+		void TouchEvent(UITouch touch)
+		{
+			var originPoint = touch.LocationInView(this);
+			
+			var scaledPoint = new Point(originPoint.X * Density, originPoint.Y * Density);
 
-        private float Density => 2;
+			var point = new SKPoint((float)(scaledPoint.X), (float)(scaledPoint.Y));
 
-        private SKPoint FromPlatform(SKPoint point)
-        {
-            return new SKPoint(point.X / Density, point.Y / Density);
-        }
+			var data = new TouchData()
+			{
+				Action = TouchAction.Tap,
+				Point = new Point(point.X, point.Y)
+			};
 
-        private SKSize FromPlatform(SKSize point)
-        {
-            return new SKSize(point.Width / Density, point.Height / Density);
-        }
+			_skView.HandleTouch(data);
+		}
 
-        private SKPoint ToPlatform(SKPoint point)
-        {
-            return new SKPoint(point.X * Density, point.Y * Density);
-        }
+		void OnViewInvalidated(object sender, EventArgs e)
+		{
+			_skView.Layout(_skView.Frame);
+			SetNeedsDisplayInRect(Bounds);
+		}
 
-        private SKSize ToPlatform(SKSize point)
-        {
-            return new SKSize(point.Width * Density, point.Height * Density);
-        }
-    }
+		void OnPaint(object sender, SKPaintSurfaceEventArgs e)
+		{
+			e.Surface.Canvas.Clear(SKColors.White);
+			_skView.Render(e.Surface.Canvas);
+		}
+
+		public override void LayoutSubviews()
+		{
+			base.LayoutSubviews();
+			_skView.Frame = SKRect.Create(SKPoint.Empty, ToPlatform(new SKSize((float)Bounds.Size.Width, (float)Bounds.Size.Height)));
+		}
+
+		float Density => 2;
+
+		SKPoint FromPlatform(SKPoint point)
+		{
+			return new SKPoint(point.X / Density, point.Y / Density);
+		}
+
+		SKSize FromPlatform(SKSize point)
+		{
+			return new SKSize(point.Width / Density, point.Height / Density);
+		}
+
+		SKPoint ToPlatform(SKPoint point)
+		{
+			return new SKPoint(point.X * Density, point.Y * Density);
+		}
+
+		 SKSize ToPlatform(SKSize point)
+		{
+			return new SKSize(point.Width * Density, point.Height * Density);
+		}
+	}
 }
