@@ -33,7 +33,9 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 
 		void NativeView_Tap(object sender, EventArgs e)
 		{
-			if (_element is View view)
+			if (_element is Button button)
+				button.SendClicked();
+			else if (_element is View view)
 				foreach (var recognizer in view.GestureRecognizers)
 					if (recognizer is TapGestureRecognizer tapRecognizer)
 						tapRecognizer.Command?.Execute(tapRecognizer.CommandParameter);
@@ -56,6 +58,10 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 			if (disposing)
 			{
 				SetElement(_element, null);
+				var nativeView = Renderer.Control;
+
+				if (nativeView != null)
+					nativeView.Tap -= NativeView_Tap;
 
 				Renderer.ElementChanged -= OnRendererElementChanged;
 				Renderer = null;
@@ -123,12 +129,15 @@ namespace Xamarin.Forms.Platform.SkiaSharp
 			var view = Renderer.Element;
 			var nativeView = Renderer.Control;
 
-			// Attach Gesture Handling
-			if (nativeView != null)
-				nativeView.Tap += NativeView_Tap;
-
 			if (view == null || view.Batched)
 				return;
+
+			// Attach Gesture Handling
+			if (nativeView != null)
+			{
+				nativeView.Tap -= NativeView_Tap;
+				nativeView.Tap += NativeView_Tap;
+			}
 
 			var boundsChanged = _lastBounds != view.Bounds;
 			var viewParent = view.RealParent as VisualElement;

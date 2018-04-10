@@ -51,35 +51,37 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Native
 			}
 		}
 
-		public bool HandleTouch(TouchData touch)
+		// TODO: This should be refactored
+		// We don't really want this method public.
+
+		public void Handle(TouchData touch)
 		{
-			// TODO:
-			// This is not working. The X/Y coordinates seem out of place. 
-			// e.g. if I tap at the very bottom of the screen I get 2330+, but the total height of the screen is only 2112.
-			if (AbsoluteFrame.Contains((float)touch.Point.X, (float)touch.Point.Y))
+			if (!touch.Handled)
 			{
-				var referenced = false;
-				foreach (var child in Children)
+				Tap?.Invoke(this, new EventArgs());
+				touch.Handled = true;
+			}
+		}
+
+		public void HandleTouch(TouchData touch)
+		{
+			foreach (var child in Children)
+			{
+				if (child.AbsoluteFrame.Contains((float)touch.Point.X, (float)touch.Point.Y))
 				{
-					if (child.HandleTouch(touch))
-						referenced = true;
+					if (child.Children.Count > 0)
+						child.HandleTouch(touch);
+					else
+						child.Handle(touch);
 
 					if (touch.Handled)
 						break;
 				}
-
-				if (!touch.Handled && referenced)
-				{
-					Tap?.Invoke(this, new EventArgs());
-					touch.Handled = true;
-				}
-
-				return true;
 			}
 
-			return false;
+			Handle(touch);
 		}
-
+		
 		public List<SKView> Children => _children;
 
 		public virtual SKSize Measure(SKSize available) => available;

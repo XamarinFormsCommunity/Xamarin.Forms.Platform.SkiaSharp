@@ -3,6 +3,7 @@ using Android.OS;
 using Android.Widget;
 using System;
 using System.ComponentModel;
+using Views = Android.Views;
 
 namespace Xamarin.Forms.Platform.SkiaSharp.Android
 {
@@ -25,7 +26,19 @@ namespace Xamarin.Forms.Platform.SkiaSharp.Android
         {
             base.OnCreate(savedInstanceState);
 
-            _layout = new LinearLayout(BaseContext);
+			var decorView = Window.DecorView;
+
+			// Hide the status bar.
+			var uiOptions = Views.SystemUiFlags.LayoutFullscreen | Views.SystemUiFlags.LayoutStable;
+			decorView.SystemUiVisibility = (Views.StatusBarVisibility)uiOptions;
+
+			Window.SetStatusBarColor(global::Android.Graphics.Color.Transparent);
+			
+			// Remember that you should never show the action bar if the
+			// status bar is hidden.
+			ActionBar.Hide();
+
+			_layout = new LinearLayout(BaseContext);
             SetContentView(_layout);
         }
 
